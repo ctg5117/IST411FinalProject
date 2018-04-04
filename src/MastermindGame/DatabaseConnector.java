@@ -5,8 +5,11 @@
  */
 package MastermindGame;
 
+import java.io.File;
 import java.io.IOException;
+import java.nio.file.FileSystems;
 import java.nio.file.Files;
+import java.nio.file.Path;
 import java.nio.file.Paths;
 import java.sql.Connection;
 import java.sql.DriverManager;
@@ -74,8 +77,8 @@ public class DatabaseConnector {
     private void createTable(){
         String strQuery = "";
         try {
-            //TODO: This needs to be modified still but will work if the path is set to the correct path
-            strQuery = new String(Files.readAllBytes(Paths.get("X:\\My Documents\\NetBeansProjects\\IST411FinalProject\\scripts\\pastgames.sql")));
+            Path path = FileSystems.getDefault().getPath("scripts\\pastgames.sql");
+            strQuery = new String(Files.readAllBytes(path));
         } catch (IOException ex) {
             Logger.getLogger(DatabaseConnector.class.getName()).log(Level.SEVERE, null, ex);
             System.out.println(ex.getLocalizedMessage());
