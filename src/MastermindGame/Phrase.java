@@ -9,6 +9,17 @@ package MastermindGame;
  *
  * @author ctg5117
  */
-public class Phrase {
+public class Phrase 
+{
     
+   private int intSize; 
+   private char[] caPhrase = new char[intSize];
+   
+   Phrase()
+   {
+       
+   }
+   
+   
+   
 }
