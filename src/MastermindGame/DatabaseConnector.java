@@ -29,11 +29,15 @@ public class DatabaseConnector {
     
     public DatabaseConnector(){
         connect();
+        //Check to make sure database exists and create the table if it does not exist
         if(!testConnection()){
             createTable();
         }
     }
     
+    /**
+     * Opens a connection to the database
+     */
     public void connect(){
         try {
             myConnection = DriverManager.getConnection("jdbc:mysql://istdata.bk.psu.edu:3306/bvs5441", "bvs5441", "berks2833");
@@ -42,6 +46,9 @@ public class DatabaseConnector {
         }
     }
     
+    /**
+     * Closes the connection
+     */
     public void closeConnection(){
         try {
             if(!myConnection.isClosed()){
@@ -52,6 +59,12 @@ public class DatabaseConnector {
         }
     }
     
+    /**
+     * Add a game to the database
+     * @param strInIP IP address of player
+     * @param strInPhrase Phrase used in the game
+     * @param intInTurnCount Turns it took to guess phrase
+     */
     public void addGame(String strInIP, String strInPhrase, int intInTurnCount){
         try {
             PreparedStatement s = myConnection.prepareStatement("insert into pastgames (IP, phrase, turns) values (?,?,?)");
@@ -64,6 +77,10 @@ public class DatabaseConnector {
         }
     }
     
+    /**
+     * Get the list of past games from the database
+     * @return ResultSet containing the phrases and number of turns
+     */
     public ResultSet getPastGames(){
         try {
             PreparedStatement s = myConnection.prepareStatement("select phrase,turns from pastgames");
@@ -74,6 +91,9 @@ public class DatabaseConnector {
         return null;
     }
     
+    /**
+     * Runs an SQL script to create the table in the database and add a test record
+     */
     private void createTable(){
         String strQuery = "";
         try {
