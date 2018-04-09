@@ -48,9 +48,4 @@ public class CheckPhrase {
         String result = "Match" + results[0] + " Close:" + results[1] + " Wrong:" + results[2];
         System.out.println(result);
     }
-
-
-
-
-
 }
