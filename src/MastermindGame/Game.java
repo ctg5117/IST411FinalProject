@@ -22,6 +22,10 @@ public class Game
         
     }
     
+    public Game(Phrase phrase){
+        gamePhrase = phrase;
+    }
+    
     public int[] check(char charInPhraseGuess[],char charInPhrase[]){
         int[] results = new int[3];
         char charPhrase[] = charInPhrase;
