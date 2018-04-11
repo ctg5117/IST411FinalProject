@@ -5,6 +5,8 @@
  */
 package MastermindGame;
 
+import javax.swing.JFrame;
+
 /**
  *
  * @author ctg5117
@@ -33,11 +35,11 @@ public class JFMainMenu extends javax.swing.JFrame {
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 400, Short.MAX_VALUE)
+            .addGap(0, 237, Short.MAX_VALUE)
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 300, Short.MAX_VALUE)
+            .addGap(0, 142, Short.MAX_VALUE)
         );
 
         pack();
