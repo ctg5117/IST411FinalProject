@@ -5,6 +5,8 @@
  */
 package MastermindGame;
 
+import java.awt.BorderLayout;
+
 /**
  *
  * @author geiss
@@ -15,6 +17,11 @@ public class JFGameDisplay extends javax.swing.JFrame {
      * Creates new form JFGameDisplay
      */
     public JFGameDisplay() {
+        JPGame myJPB = new JPGame();
+        myJPB.setVisible(true);
+        this.setLayout(new BorderLayout());
+        this.add(myJPB, BorderLayout.CENTER);
+        this.pack();
         initComponents();
     }
 
@@ -33,11 +40,11 @@ public class JFGameDisplay extends javax.swing.JFrame {
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 400, Short.MAX_VALUE)
+            .addGap(0, 672, Short.MAX_VALUE)
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 300, Short.MAX_VALUE)
+            .addGap(0, 442, Short.MAX_VALUE)
         );
 
         pack();

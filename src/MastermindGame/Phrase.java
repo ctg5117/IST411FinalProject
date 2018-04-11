@@ -5,22 +5,26 @@
  */
 package MastermindGame;
 
+import java.io.Serializable;
+
 /**
  *
  * @author ctg5117
  */
-public class Phrase 
+public class Phrase implements Serializable
 {
     
-   private int intSize; 
+   private int intSize = 5; 
    private char[] caPhrase = new char[intSize];
    
    /**Defaults intSize to 5.
     * 
     */
-   Phrase()
+   Phrase(char[] caIn)
    {
        intSize = 5;
+       
+       caPhrase = caIn;
    }
    
    
