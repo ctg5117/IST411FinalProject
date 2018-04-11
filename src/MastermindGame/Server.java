@@ -10,6 +10,7 @@ import java.io.ObjectInputStream;
 import java.io.ObjectOutputStream;
 import java.net.ServerSocket;
 import java.net.Socket;
+import java.util.Arrays;
 import java.util.HashMap;
 import java.util.logging.Level;
 import java.util.logging.Logger;
@@ -44,9 +45,6 @@ public class Server
         }
     }
     
-    public void passPhrase(Phrase phrase, int intClientNum){
-        phrases.put(intClientNum, phrase);
-    }
     
     private class ClientThread extends Thread{
         private Socket socket;
@@ -63,7 +61,7 @@ public class Server
                 out.flush();
                 in = new ObjectInputStream(socket.getInputStream());
                 correctPhrase = (Phrase) in.readObject();
-                passPhrase(correctPhrase, intClientNum);
+                phrases.put(intNumClients, correctPhrase);
                 games.put(intClientNum, new Game(correctPhrase));
             } catch (IOException ex) {
                 Logger.getLogger(Server.class.getName()).log(Level.SEVERE, null, ex);
@@ -92,6 +90,15 @@ public class Server
 
                try {
                   phrase = (Phrase) in.readObject();
+                  Game g = null;
+                  if(intClientNum==0) {
+                	  g = games.get(1);
+                  }else if(intClientNum==1) {
+                	  g = games.get(2);
+                  }
+                  String[] response = g.retrievePhrase(phrase);
+                  System.out.println(Arrays.toString(response));
+                  sendResponse(response);
                }
 
                // process problems reading from client

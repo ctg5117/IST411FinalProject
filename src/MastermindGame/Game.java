@@ -59,9 +59,9 @@ public class Game
         gamePhrase.setPhrase(caIn);
     }
     
-    public String[] retrievePhrase(char[] caIn)
+    public String[] retrievePhrase(Phrase phrase)
     {
-        currPhrase.setPhrase(caIn);
+        currPhrase = phrase;
         
         return sendCorrect(check(currPhrase.getPhrase(), gamePhrase.getPhrase()));
     }
