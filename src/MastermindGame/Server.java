@@ -62,7 +62,11 @@ public class Server
                 in = new ObjectInputStream(socket.getInputStream());
                 correctPhrase = (Phrase) in.readObject();
                 phrases.put(intNumClients, correctPhrase);
-                games.put(intClientNum, new Game(correctPhrase));
+                if(intClientNum==0) {
+                games.put(1, new Game(correctPhrase));
+                }else if(intClientNum==1) {
+                	games.put(0, new Game(correctPhrase));
+                }
             } catch (IOException ex) {
                 Logger.getLogger(Server.class.getName()).log(Level.SEVERE, null, ex);
             } catch (ClassNotFoundException ex) {
@@ -90,12 +94,7 @@ public class Server
 
                try {
                   phrase = (Phrase) in.readObject();
-                  Game g = null;
-                  if(intClientNum==0) {
-                	  g = games.get(1);
-                  }else if(intClientNum==1) {
-                	  g = games.get(2);
-                  }
+                  Game g = games.get(intClientNum);
                   String[] response = g.retrievePhrase(phrase);
                   System.out.println(Arrays.toString(response));
                   sendResponse(response);
