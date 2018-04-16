@@ -26,6 +26,7 @@ public class Server
     private ClientThread[] clients = new ClientThread[2];
     private HashMap<Integer, Phrase> phrases;
     private HashMap<Integer, Game> games;
+    private int intPort;
     
     public Server(){
         intNumClients = 0;
@@ -33,8 +34,14 @@ public class Server
         games = new HashMap<Integer, Game>();
     }
     
+    public static void main(String[] args) {
+        Server server = new Server();
+        server.runServer(2000);
+    }
+    
     public void runServer(int intPortNumber){
         try{
+            intPort = intPortNumber;
             ServerSocket server = new ServerSocket(intPortNumber, MAXCLIENTS);
             while(true){
                 clients[intNumClients] = new ClientThread(server.accept(), intNumClients);
@@ -43,6 +50,10 @@ public class Server
         } catch (IOException ex) {
             Logger.getLogger(Server.class.getName()).log(Level.SEVERE, null, ex);
         }
+    }
+    
+    public int getPortNumber(){
+        return intPort;
     }
     
     
