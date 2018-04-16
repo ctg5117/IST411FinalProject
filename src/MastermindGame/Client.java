@@ -94,6 +94,15 @@ public class Client
     out = new ObjectOutputStream(socket.getOutputStream());
     out.flush();
     in = new ObjectInputStream(socket.getInputStream());
+    String connectionMessage = null;
+        try {
+            connectionMessage = (String) in.readObject();
+            out.writeObject("Client Connected");
+            out.flush();
+        } catch (ClassNotFoundException ex) {
+            Logger.getLogger(Client.class.getName()).log(Level.SEVERE, null, ex);
+        }
+    System.out.println(connectionMessage);
     
 
         // Process all messages from server, according to the protocol.

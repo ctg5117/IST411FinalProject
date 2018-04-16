@@ -71,6 +71,10 @@ public class Server
                 out = new ObjectOutputStream(socket.getOutputStream());
                 out.flush();
                 in = new ObjectInputStream(socket.getInputStream());
+                out.writeObject("Connection Successful");
+                out.flush();
+                String connectionMessage = (String) in.readObject();
+                System.out.println(connectionMessage);
                 correctPhrase = (Phrase) in.readObject();
                 phrases.put(intNumClients, correctPhrase);
                 if(intClientNum==0) {
