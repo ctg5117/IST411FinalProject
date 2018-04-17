@@ -44,8 +44,10 @@ public class Server
             intPort = intPortNumber;
             ServerSocket server = new ServerSocket(intPortNumber, MAXCLIENTS);
             while(true){
-                clients[intNumClients] = new ClientThread(server.accept(), intNumClients);
                 intNumClients++;
+                clients[intNumClients-1] = new ClientThread(server.accept(), intNumClients-1);
+                clients[intNumClients-1].start();
+                
             }
         } catch (IOException ex) {
             Logger.getLogger(Server.class.getName()).log(Level.SEVERE, null, ex);
@@ -75,13 +77,7 @@ public class Server
                 out.flush();
                 String connectionMessage = (String) in.readObject();
                 System.out.println(connectionMessage);
-                correctPhrase = (Phrase) in.readObject();
-                phrases.put(intNumClients, correctPhrase);
-                if(intClientNum==0) {
-                games.put(1, new Game(correctPhrase));
-                }else if(intClientNum==1) {
-                	games.put(0, new Game(correctPhrase));
-                }
+                
             } catch (IOException ex) {
                 Logger.getLogger(Server.class.getName()).log(Level.SEVERE, null, ex);
             } catch (ClassNotFoundException ex) {
@@ -99,6 +95,19 @@ public class Server
         }
         
         public void run(){
+            try {
+                correctPhrase = (Phrase) in.readObject();
+            } catch (IOException ex) {
+                Logger.getLogger(Server.class.getName()).log(Level.SEVERE, null, ex);
+            } catch (ClassNotFoundException ex) {
+                Logger.getLogger(Server.class.getName()).log(Level.SEVERE, null, ex);
+            }
+                phrases.put(intNumClients, correctPhrase);
+                if(intClientNum==0) {
+                games.put(1, new Game(correctPhrase));
+                }else if(intClientNum==1) {
+                	games.put(0, new Game(correctPhrase));
+                }
             Phrase phrase = null;
 
          // process connection
