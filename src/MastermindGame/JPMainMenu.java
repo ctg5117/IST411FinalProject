@@ -86,7 +86,22 @@ public class JPMainMenu extends javax.swing.JPanel {
     }//GEN-LAST:event_historyButtonActionPerformed
 
     private void fgButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_fgButtonActionPerformed
-        String ipInput = JOptionPane.showInputDialog("Enter IP Address:");
+        int result = JOptionPane.showConfirmDialog(null, inputs, "MySQL Connection Information", JOptionPane.PLAIN_MESSAGE);
+        if (result == JOptionPane.OK_OPTION) {
+            strHost = jtfHost.getText();
+            strPort = jtfPort.getText();
+            strUser = jtfUser.getText();
+            strPassword = new String(jpfPassword.getPassword());
+            strDB = jtfDB.getText();
+            System.out.println("You entered \n" 
+                + "Host  "  + strHost + "\n"
+                + "Port  "  + strPort + "\n"
+                + "User  "  +  strUser + "\n"
+                + "PW    "  + strPassword + "\n"
+                + "DB    "  + strDB + "\n");
+            } 
+        else 
+            System.out.println("User canceled / closed the dialog, result = " + result);
     }//GEN-LAST:event_fgButtonActionPerformed
 
 

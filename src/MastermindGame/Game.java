@@ -6,6 +6,8 @@
 package MastermindGame;
 
 import java.util.ArrayList;
+import java.util.Random;
+import java.util.Scanner;
 
 /**
  *
@@ -61,9 +63,25 @@ public class Game
         
         return sendCorrect(check(currPhrase.getPhrase(), gamePhrase.getPhrase()));
     }
-           
-         
     
+    public void intializeFilePhrase(){
+        String[] filePhrase = new String[500];
+        int counter = 0;
+        char[] p = new char[5];
+        Scanner sc = new Scanner("X:\\My Documents\\NetBeansProjects\\IST411FinalProject"); // list retrieved from thefreedictionary.com
+        
+        while(sc.hasNextLine()){
+            filePhrase[counter] = sc.nextLine();
+            counter++;
+        }
+        
+        Random rand = new Random();
+        int randomNumber = rand.nextInt(filePhrase.length);
+        String temp = filePhrase[randomNumber];
+        for(int x = 0; x < 5; x++){
+            p[x] = temp.charAt(x);
+        }  
+    }
     
     /**Method to display correctness of a phrase.
      * 
