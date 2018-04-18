@@ -5,8 +5,12 @@
  */
 package MastermindGame;
 
+import javax.swing.JComponent;
 import javax.swing.JFrame;
+import javax.swing.JLabel;
 import javax.swing.JOptionPane;
+import javax.swing.JTextField;
+import javax.swing.SwingUtilities;
 
 /**
  *
@@ -54,6 +58,11 @@ public class JPMainMenu extends javax.swing.JPanel {
         });
 
         jbHost.setText("Host Game");
+        jbHost.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jbHostActionPerformed(evt);
+            }
+        });
 
         jButton1.setText("Single Player");
         jButton1.addActionListener(new java.awt.event.ActionListener() {
@@ -102,13 +111,42 @@ public class JPMainMenu extends javax.swing.JPanel {
     }//GEN-LAST:event_jbHistoryActionPerformed
 
     private void jbConnectActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jbConnectActionPerformed
-        String ipInput = JOptionPane.showInputDialog("Enter IP Address:");
+        Client client = new Client();
+        client.start();
+        JFGameDisplay game = new JFGameDisplay();
+        game.setVisible(true);
+        SwingUtilities.windowForComponent(this).setVisible(false);
     }//GEN-LAST:event_jbConnectActionPerformed
 
     private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
         // TODO add your handling code here:
     }//GEN-LAST:event_jButton1ActionPerformed
 
+    private void jbHostActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jbHostActionPerformed
+        int intPort = requestServerPort();
+        Thread server = new Thread(new Server(intPort));
+        server.start();
+        Client client = new Client(intPort);
+        client.start();
+        JFGameDisplay game = new JFGameDisplay();
+        game.setVisible(true);
+        SwingUtilities.windowForComponent(this).setVisible(false);
+    }//GEN-LAST:event_jbHostActionPerformed
+
+    private int requestServerPort(){
+        JTextField jtfPort = new JTextField();
+        JComponent[] inputs = new JComponent[]{
+            new JLabel("Server Port"),
+            jtfPort
+        };
+        int result = JOptionPane.showConfirmDialog(null, inputs, "Set Server Port", JOptionPane.PLAIN_MESSAGE);
+        if (result == JOptionPane.OK_OPTION) 
+        {
+            int intPort = Integer.parseInt(jtfPort.getText());
+            return intPort;
+        }
+        return 2000;
+    }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton jButton1;
