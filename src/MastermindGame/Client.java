@@ -26,8 +26,10 @@ import javax.swing.JTextField;
  *
  * @author ctg5117
  */
-public class Client
+public class Client extends Thread
 {
+    private String strHost;
+    private int intPort;
     //Use run from this code http://cs.lmu.edu/~ray/notes/javanetexamples/
     
     //Open main menu
@@ -52,6 +54,8 @@ public class Client
             String[] serverInformation = getServerAddress();
             String strIP = serverInformation[0];
             int intPort = Integer.parseInt(serverInformation[1]);
+            this.strHost = strIP;
+            this.intPort = intPort;
             run(strIP, intPort);
         } catch (IOException ex) {
             Logger.getLogger(Client.class.getName()).log(Level.SEVERE, null, ex);
@@ -59,11 +63,8 @@ public class Client
     }
     
     public Client(int intPort){
-        try {
-            run("127.0.0.1", intPort);
-        } catch (IOException ex) {
-            Logger.getLogger(Client.class.getName()).log(Level.SEVERE, null, ex);
-        }
+        strHost = "127.0.0.1";
+        this.intPort = intPort;
     }
     
     private static String[] getServerAddress()
@@ -84,6 +85,15 @@ public class Client
             return new String[]{strHost, strPort};
         }
         return null;
+    }
+    
+    @Override
+    public void run(){
+        try {
+            run(strHost, intPort);
+        } catch (IOException ex) {
+            Logger.getLogger(Client.class.getName()).log(Level.SEVERE, null, ex);
+        }
     }
     
     private void run(String strIP, int intPort) throws IOException

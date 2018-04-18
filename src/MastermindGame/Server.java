@@ -19,7 +19,7 @@ import java.util.logging.Logger;
  *
  * @author ctg5117
  */
-public class Server
+public class Server implements Runnable
 {
     private int intNumClients;
     private final int MAXCLIENTS = 2;
@@ -32,6 +32,13 @@ public class Server
         intNumClients = 0;
         phrases = new HashMap<Integer, Phrase>();
         games = new HashMap<Integer, Game>();
+    }
+    
+     public Server(int intPort){
+        intNumClients = 0;
+        phrases = new HashMap<Integer, Phrase>();
+        games = new HashMap<Integer, Game>();
+        this.intPort = intPort;
     }
     
     public static void main(String[] args) {
@@ -56,6 +63,25 @@ public class Server
     
     public int getPortNumber(){
         return intPort;
+    }
+    
+    public void setPortNumber(int intPort){
+        this.intPort = intPort;
+    }
+
+    @Override
+    public void run() {
+        try{
+            ServerSocket server = new ServerSocket(intPort, MAXCLIENTS);
+            while(true){
+                intNumClients++;
+                clients[intNumClients-1] = new ClientThread(server.accept(), intNumClients-1);
+                clients[intNumClients-1].start();
+                
+            }
+        } catch (IOException ex) {
+            Logger.getLogger(Server.class.getName()).log(Level.SEVERE, null, ex);
+        }
     }
     
     
