@@ -22,6 +22,10 @@ public class Game
         
     }
     
+    public Game(Phrase phrase){
+        gamePhrase = phrase;
+    }
+    
     public int[] check(char charInPhraseGuess[],char charInPhrase[]){
         int[] results = new int[3];
         char charPhrase[] = charInPhrase;
@@ -55,9 +59,9 @@ public class Game
         gamePhrase.setPhrase(caIn);
     }
     
-    public String[] retrievePhrase(char[] caIn)
+    public String[] retrievePhrase(Phrase phrase)
     {
-        currPhrase.setPhrase(caIn);
+        currPhrase = phrase;
         
         return sendCorrect(check(currPhrase.getPhrase(), gamePhrase.getPhrase()));
     }
