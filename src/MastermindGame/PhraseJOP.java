@@ -46,33 +46,16 @@ public class PhraseJOP{
         return phrase;
     }
         
-        
-        //int result = JOptionPane.showConfirmDialog(null, PhraseInputPanel, "Phrase", JOptionPane.PLAIN_MESSAGE);
-        //if (result == JOptionPane.OK_OPTION) 
+
+//    public static void main(String[] args)
+//    {
+//        EventQueue.invokeLater(new Runnable()
 //        {
-//            phrase[0] = jtfChar1.getText().charAt(0);
-//            phrase[1] = jtfChar2.getText().charAt(0);
-//            phrase[2] = jtfChar3.getText().charAt(0);
-//            phrase[3] = jtfChar4.getText().charAt(0);
-//            phrase[4] = jtfChar5.getText().charAt(0);
-//        } 
-       // else 
-        //{
-       //     System.out.println("User canceled / closed the dialog, result = " + result);
-       // }
- //       return phrase;
- // getCredentials
-    
-    
-    public static void main(String[] args)
-    {
-        EventQueue.invokeLater(new Runnable()
-        {
-            public void run()
-            {
-                PhraseJOP myJOP = new PhraseJOP();
-                System.out.println(myJOP.getPhrase());
-            }
-        });
-    }
-}
+//            public void run()
+//            {
+//                PhraseJOP myJOP = new PhraseJOP();
+//                System.out.println(myJOP.getPhrase());
+//            }
+//        });
+//    }
+//}
