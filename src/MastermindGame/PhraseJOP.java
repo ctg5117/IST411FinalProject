@@ -1,32 +1,104 @@
 package MastermindGame;
 
-import javax.swing.JLabel;
-import javax.swing.JOptionPane;
-import javax.swing.JPanel;
-import javax.swing.JTextField;
-import java.awt.Component;
+import java.awt.EventQueue;
 import java.awt.GridLayout;
+import javax.swing.*;
+import javax.swing.JTextField;
 
-public class PhraseJOP extends JOptionPane{
+
+//Adapted from https://stackoverflow.com/questions/17617390/how-to-set-manage-the-layout-of-joptionpane
+
+public class PhraseJOP{
     
-    public PhraseJOP(){
-        String messages[] = {"Char1", "Char2", "Char3", "Char4", "Char5"};
-        showInputDialog(null, messages);    
-    }
-    
-    public static String[] showInputDialog(Component parentComponent, String messages[]){
-        JTextField tFields[] = new JTextField[messages.length];
-        JPanel panel = new JPanel();
-        String input[] = new String[messages.length];
-        panel.setLayout(new GridLayout(messages.length, 2, 0, 0));
-        for(int i = 0 ; i < messages.length ; i++){
-            panel.add(new JLabel(messages[i]));
-            tFields[i] = new JTextField();
-            panel.add(tFields[i]);
+    char[] phrase;
+       
+    public char [] getPhrase()
+    {
+        phrase = new char[5];
+        JTextField jtfChar1 = new JTextField(1);
+        JTextField jtfChar2 = new JTextField(1);
+        JTextField jtfChar3 = new JTextField(1);
+        JTextField jtfChar4 = new JTextField(1);
+        JTextField jtfChar5 = new JTextField(1);
+//        final JComponent[] inputs = new JComponent[] 
+//        {
+ //          new JLabel("Phrase"),
+//           jtfChar1,
+//           jtfChar2,
+//           jtfChar3,
+//           jtfChar4,
+//           jtfChar5
+//        };
+//        JOptionPane phraseJOP = new JOptionPane();
+//        GridLayout myGL = new GridLayout(1, 5);
+//        phraseJOP.setLayout(myGL);
+//        phraseJOP.add(jtfChar1);
+//        phraseJOP.add(jtfChar2);
+//        phraseJOP.add(jtfChar3);
+//        phraseJOP.add(jtfChar4);
+//        phraseJOP.add(jtfChar5);
+        
+//        int result = phraseJOP.getMessageType();
+        
+//        JFrame frame = new JFrame();
+//        frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+//        frame.setLocationRelativeTo( null );
+//        frame.setVisible( true );
+
+        //  Build a custom panel
+
+        JPanel panel = new JPanel( new GridLayout(1, 5) );
+        panel.add(jtfChar1);
+        panel.add(jtfChar2);
+        panel.add(jtfChar3);
+        panel.add(jtfChar4);
+        panel.add(jtfChar5);
+
+        int result = JOptionPane.showConfirmDialog(null,panel,"Please Enter Your Phrase",JOptionPane.OK_CANCEL_OPTION);
+
+        if(result == JOptionPane.OK_OPTION)
+        {
+            phrase[0] = jtfChar1.getText().toUpperCase().charAt(0);
+            phrase[1] = jtfChar2.getText().toUpperCase().charAt(0);
+            phrase[2] = jtfChar3.getText().toUpperCase().charAt(0);
+            phrase[3] = jtfChar4.getText().toUpperCase().charAt(0);
+            phrase[4] = jtfChar5.getText().toUpperCase().charAt(0);
         }
-        JOptionPane.showConfirmDialog(parentComponent, panel, "Input", JOptionPane.OK_CANCEL_OPTION);
-        for(int i = 0 ; i < messages.length ; i++)
-           input[i] = tFields[i].getText();
-       return input;
+        else
+        {
+            System.out.println("Canceled");
+        }
+
+        return phrase;
+    }
+        
+        
+        //int result = JOptionPane.showConfirmDialog(null, PhraseInputPanel, "Phrase", JOptionPane.PLAIN_MESSAGE);
+        //if (result == JOptionPane.OK_OPTION) 
+//        {
+//            phrase[0] = jtfChar1.getText().charAt(0);
+//            phrase[1] = jtfChar2.getText().charAt(0);
+//            phrase[2] = jtfChar3.getText().charAt(0);
+//            phrase[3] = jtfChar4.getText().charAt(0);
+//            phrase[4] = jtfChar5.getText().charAt(0);
+//        } 
+       // else 
+        //{
+       //     System.out.println("User canceled / closed the dialog, result = " + result);
+       // }
+ //       return phrase;
+ // getCredentials
+    
+    
+    public static void main(String[] args)
+    {
+        EventQueue.invokeLater(new Runnable()
+        {
+            public void run()
+            {
+                PhraseJOP myJOP = new PhraseJOP();
+                System.out.println(myJOP.getPhrase());
+            }
+        });
     }
 }
