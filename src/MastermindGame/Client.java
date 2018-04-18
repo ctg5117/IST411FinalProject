@@ -50,16 +50,11 @@ public class Client extends Thread
     ObjectOutputStream out;
     
     public Client(){
-        try {
-            String[] serverInformation = getServerAddress();
-            String strIP = serverInformation[0];
-            int intPort = Integer.parseInt(serverInformation[1]);
-            this.strHost = strIP;
-            this.intPort = intPort;
-            run(strIP, intPort);
-        } catch (IOException ex) {
-            Logger.getLogger(Client.class.getName()).log(Level.SEVERE, null, ex);
-        }
+        String[] serverInformation = getServerAddress();
+        String strIP = serverInformation[0];
+        int intPort = Integer.parseInt(serverInformation[1]);
+        this.strHost = strIP;
+        this.intPort = intPort;
     }
     
     public Client(int intPort){
