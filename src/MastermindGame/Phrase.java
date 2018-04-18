@@ -5,21 +5,51 @@
  */
 package MastermindGame;
 
+import java.io.Serializable;
+
 /**
  *
  * @author ctg5117
  */
-public class Phrase 
+public class Phrase implements Serializable
 {
     
-   private int intSize; 
+   private int intSize = 5; 
    private char[] caPhrase = new char[intSize];
    
-   Phrase()
+   /**Defaults intSize to 5.
+    * 
+    */
+   Phrase(char[] caIn)
    {
+       intSize = 5;
        
+       caPhrase = caIn;
    }
    
    
+   
+   /*
+   Getter and Setter Block
+   */
+   public void setPhrase(char[] caInPhrase)
+   {
+       caPhrase = caInPhrase; 
+   }
+   
+   public char[] getPhrase()
+   {
+       return caPhrase;
+   }
+   
+   public void setSize(int intInSize)
+   {
+       intSize = intInSize;
+   }
+   
+   public int getSize()
+   {
+       return intSize;
+   }
    
 }
