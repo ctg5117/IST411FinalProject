@@ -20,32 +20,6 @@ public class PhraseJOP{
         JTextField jtfChar3 = new JTextField(1);
         JTextField jtfChar4 = new JTextField(1);
         JTextField jtfChar5 = new JTextField(1);
-//        final JComponent[] inputs = new JComponent[] 
-//        {
- //          new JLabel("Phrase"),
-//           jtfChar1,
-//           jtfChar2,
-//           jtfChar3,
-//           jtfChar4,
-//           jtfChar5
-//        };
-//        JOptionPane phraseJOP = new JOptionPane();
-//        GridLayout myGL = new GridLayout(1, 5);
-//        phraseJOP.setLayout(myGL);
-//        phraseJOP.add(jtfChar1);
-//        phraseJOP.add(jtfChar2);
-//        phraseJOP.add(jtfChar3);
-//        phraseJOP.add(jtfChar4);
-//        phraseJOP.add(jtfChar5);
-        
-//        int result = phraseJOP.getMessageType();
-        
-//        JFrame frame = new JFrame();
-//        frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-//        frame.setLocationRelativeTo( null );
-//        frame.setVisible( true );
-
-        //  Build a custom panel
 
         JPanel panel = new JPanel( new GridLayout(1, 5) );
         panel.add(jtfChar1);
