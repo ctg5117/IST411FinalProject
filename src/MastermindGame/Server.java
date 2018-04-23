@@ -145,8 +145,12 @@ public class Server implements Runnable
                 }
             Phrase phrase = null;
             if (intClientNum == 0){
+                while(clients[1] == null){
+                }
                 clients[1].sendMessage("Phrase Recieved");
             }else if (intClientNum == 1){
+                while (clients[0] == null){ 
+                }
                 clients[0].sendMessage("Phrase Recieved");
             }
 
@@ -160,7 +164,7 @@ public class Server implements Runnable
                   phrase = (Phrase) in.readObject();
                   Game g = games.get(intClientNum);
                   String[] response = g.retrievePhrase(phrase);
-                  System.out.println(Arrays.toString(response));
+                  //System.out.println(Arrays.toString(response));
                   sendResponse(response);
                }
 

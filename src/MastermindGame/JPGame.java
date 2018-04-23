@@ -6,18 +6,26 @@
 package MastermindGame;
 
 import java.awt.Font;
+import java.util.Arrays;
 
 /**
  *
  * @author ctg5117
  */
 public class JPGame extends javax.swing.JPanel {
+    
+    Client client;
 
     /**
      * Creates new form JPGame
      */
     public JPGame() {
         initComponents();
+    }
+    
+    public JPGame(Client client){
+        initComponents();
+        this.client = client;
     }
     
     /**
@@ -49,18 +57,21 @@ public class JPGame extends javax.swing.JPanel {
 
         jScrollPane1.setHorizontalScrollBarPolicy(javax.swing.ScrollPaneConstants.HORIZONTAL_SCROLLBAR_NEVER);
 
+        jtPlayer1.setEditable(false);
         jtPlayer1.setColumns(20);
         jtPlayer1.setRows(5);
         jScrollPane1.setViewportView(jtPlayer1);
 
         jScrollPane2.setHorizontalScrollBarPolicy(javax.swing.ScrollPaneConstants.HORIZONTAL_SCROLLBAR_NEVER);
 
+        jtPlayer2.setEditable(false);
         jtPlayer2.setColumns(20);
         jtPlayer2.setRows(5);
         jScrollPane2.setViewportView(jtPlayer2);
 
         jbCheckPhrase.setFont(new java.awt.Font("Tahoma", 0, 12)); // NOI18N
         jbCheckPhrase.setText("Check Phrase");
+        jbCheckPhrase.setEnabled(false);
         jbCheckPhrase.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 jbCheckPhraseActionPerformed(evt);
@@ -83,6 +94,7 @@ public class JPGame extends javax.swing.JPanel {
 
         jScrollPane4.setHorizontalScrollBarPolicy(javax.swing.ScrollPaneConstants.HORIZONTAL_SCROLLBAR_NEVER);
 
+        jtaCurrentTurn.setEditable(false);
         jtaCurrentTurn.setColumns(20);
         jtaCurrentTurn.setRows(5);
         jScrollPane4.setViewportView(jtaCurrentTurn);
@@ -100,25 +112,23 @@ public class JPGame extends javax.swing.JPanel {
                         .addGap(18, 18, 18)
                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                             .addGroup(layout.createSequentialGroup()
-                                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                                    .addComponent(jLabel3)
-                                    .addComponent(jbCheckPhrase, javax.swing.GroupLayout.PREFERRED_SIZE, 174, javax.swing.GroupLayout.PREFERRED_SIZE))
-                                .addGap(0, 0, Short.MAX_VALUE))
-                            .addGroup(layout.createSequentialGroup()
-                                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                                    .addGroup(layout.createSequentialGroup()
-                                        .addComponent(jtfFirst, javax.swing.GroupLayout.PREFERRED_SIZE, 30, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                                        .addComponent(jtfSecond, javax.swing.GroupLayout.PREFERRED_SIZE, 30, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                                        .addComponent(jtfThird, javax.swing.GroupLayout.PREFERRED_SIZE, 30, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                                        .addComponent(jtfFourth, javax.swing.GroupLayout.PREFERRED_SIZE, 30, javax.swing.GroupLayout.PREFERRED_SIZE))
-                                    .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 0, Short.MAX_VALUE))
+                                .addComponent(jtfFirst, javax.swing.GroupLayout.PREFERRED_SIZE, 30, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                                .addComponent(jtfSecond, javax.swing.GroupLayout.PREFERRED_SIZE, 30, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                                .addComponent(jtfThird, javax.swing.GroupLayout.PREFERRED_SIZE, 30, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                                .addComponent(jtfFourth, javax.swing.GroupLayout.PREFERRED_SIZE, 30, javax.swing.GroupLayout.PREFERRED_SIZE)
                                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                                 .addComponent(jtfFifth, javax.swing.GroupLayout.PREFERRED_SIZE, 30, javax.swing.GroupLayout.PREFERRED_SIZE)
                                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                                .addComponent(jlYourPhrase, javax.swing.GroupLayout.PREFERRED_SIZE, 100, javax.swing.GroupLayout.PREFERRED_SIZE))))
+                                .addComponent(jlYourPhrase, javax.swing.GroupLayout.PREFERRED_SIZE, 100, javax.swing.GroupLayout.PREFERRED_SIZE))
+                            .addGroup(layout.createSequentialGroup()
+                                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                    .addComponent(jLabel3)
+                                    .addComponent(jbCheckPhrase, javax.swing.GroupLayout.PREFERRED_SIZE, 174, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                    .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 114, javax.swing.GroupLayout.PREFERRED_SIZE))
+                                .addGap(0, 0, Short.MAX_VALUE))))
                     .addGroup(layout.createSequentialGroup()
                         .addGap(39, 39, 39)
                         .addComponent(jLabel1)
@@ -127,9 +137,9 @@ public class JPGame extends javax.swing.JPanel {
                         .addGap(85, 85, 85)
                         .addComponent(jLabel2))
                     .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
-                        .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                        .addComponent(jScrollPane4, javax.swing.GroupLayout.PREFERRED_SIZE, 220, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addGap(59, 59, 59)
+                        .addGap(162, 162, 162)
+                        .addComponent(jScrollPane4, javax.swing.GroupLayout.PREFERRED_SIZE, 252, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                         .addComponent(jScrollPane2, javax.swing.GroupLayout.PREFERRED_SIZE, 100, javax.swing.GroupLayout.PREFERRED_SIZE)))
                 .addGap(27, 27, 27))
         );
@@ -164,10 +174,31 @@ public class JPGame extends javax.swing.JPanel {
     }// </editor-fold>//GEN-END:initComponents
 
     private void jbCheckPhraseActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jbCheckPhraseActionPerformed
-        // TODO add your handling code here:
+        StringBuilder sb = new StringBuilder();
+        sb.append(jtfFirst.getText().toUpperCase());
+        sb.append(jtfSecond.getText().toUpperCase());
+        sb.append(jtfThird.getText().toUpperCase());
+        sb.append(jtfFourth.getText().toUpperCase());
+        sb.append(jtfFifth.getText().toUpperCase());
+        String strPhrase = sb.toString();
+        jtPlayer1.append(strPhrase + "\n");
+        char[] charPhrase = strPhrase.toCharArray();
+        Phrase phrase = new Phrase(charPhrase);
+        client.sendPhrase(phrase);
         
     }//GEN-LAST:event_jbCheckPhraseActionPerformed
-
+    
+    public void activateButton(){
+        jbCheckPhrase.setEnabled(true);
+    }
+    
+    public void setYourPhrase(String phrase){
+        jlYourPhrase.setText(phrase);
+    }
+    
+    public void updateCurrentTurn(String[] text){
+        jtaCurrentTurn.append(Arrays.toString(text) + "\n");
+    }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JLabel jLabel1;

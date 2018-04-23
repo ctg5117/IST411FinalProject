@@ -10,11 +10,10 @@ import javax.swing.JTextField;
 
 public class PhraseJOP{
     
-    char[] phrase;
        
-    public char [] getPhrase()
+    public static char[] getPhrase()
     {
-        phrase = new char[5];
+        char[] phrase = new char[5];
         JTextField jtfChar1 = new JTextField(1);
         JTextField jtfChar2 = new JTextField(1);
         JTextField jtfChar3 = new JTextField(1);
