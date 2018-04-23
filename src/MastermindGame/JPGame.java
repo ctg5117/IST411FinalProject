@@ -175,11 +175,11 @@ public class JPGame extends javax.swing.JPanel {
 
     private void jbCheckPhraseActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jbCheckPhraseActionPerformed
         StringBuilder sb = new StringBuilder();
-        sb.append(jtfFirst.getText().toUpperCase());
-        sb.append(jtfSecond.getText().toUpperCase());
-        sb.append(jtfThird.getText().toUpperCase());
-        sb.append(jtfFourth.getText().toUpperCase());
-        sb.append(jtfFifth.getText().toUpperCase());
+        sb.append(jtfFirst.getText().substring(0, 1).toUpperCase());
+        sb.append(jtfSecond.getText().substring(0, 1).toUpperCase());
+        sb.append(jtfThird.getText().substring(0, 1).toUpperCase());
+        sb.append(jtfFourth.getText().substring(0, 1).toUpperCase());
+        sb.append(jtfFifth.getText().substring(0, 1).toUpperCase());
         String strPhrase = sb.toString();
         jtPlayer1.append(strPhrase + "\n");
         char[] charPhrase = strPhrase.toCharArray();
