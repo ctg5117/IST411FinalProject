@@ -109,6 +109,13 @@ public class Client extends Thread
         }
     System.out.println(connectionMessage);
     
+        try {
+            String phraseSet = (String) in.readObject();
+            System.out.println(phraseSet);
+        } catch (ClassNotFoundException ex) {
+            Logger.getLogger(Client.class.getName()).log(Level.SEVERE, null, ex);
+        }
+    
 
         // Process all messages from server, according to the protocol.
         while (true)

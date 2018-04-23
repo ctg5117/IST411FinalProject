@@ -120,6 +120,15 @@ public class Server implements Runnable
             }
         }
         
+        public void sendMessage(String message){
+            try {
+                out.writeObject(message);
+                out.flush();
+            } catch (IOException ex) {
+                Logger.getLogger(Server.class.getName()).log(Level.SEVERE, null, ex);
+            }
+        }
+        
         public void run(){
             try {
                 correctPhrase = (Phrase) in.readObject();
@@ -135,6 +144,11 @@ public class Server implements Runnable
                 	games.put(0, new Game(correctPhrase));
                 }
             Phrase phrase = null;
+            if (intClientNum == 0){
+                clients[1].sendMessage("Phrase Recieved");
+            }else if (intClientNum == 1){
+                clients[0].sendMessage("Phrase Recieved");
+            }
 
          // process connection
          try {
