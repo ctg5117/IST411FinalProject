@@ -118,6 +118,7 @@ public class JPMainMenu extends javax.swing.JPanel {
         SwingUtilities.windowForComponent(this).setVisible(false);
     }//GEN-LAST:event_jbConnectActionPerformed
 
+
     private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
         // TODO add your handling code here:
     }//GEN-LAST:event_jButton1ActionPerformed
