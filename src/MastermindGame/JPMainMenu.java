@@ -5,8 +5,12 @@
  */
 package MastermindGame;
 
+import javax.swing.JComponent;
 import javax.swing.JFrame;
+import javax.swing.JLabel;
 import javax.swing.JOptionPane;
+import javax.swing.JTextField;
+import javax.swing.SwingUtilities;
 
 /**
  *
@@ -30,24 +34,40 @@ public class JPMainMenu extends javax.swing.JPanel {
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
 
-        historyButton = new javax.swing.JButton();
+        jbHistory = new javax.swing.JButton();
         jLabel2 = new javax.swing.JLabel();
-        fgButton = new javax.swing.JButton();
+        jbConnect = new javax.swing.JButton();
+        jbHost = new javax.swing.JButton();
+        jButton1 = new javax.swing.JButton();
 
-        historyButton.setText("Game History");
-        historyButton.addActionListener(new java.awt.event.ActionListener() {
+        jbHistory.setText("Game History");
+        jbHistory.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                historyButtonActionPerformed(evt);
+                jbHistoryActionPerformed(evt);
             }
         });
 
         jLabel2.setFont(new java.awt.Font("Tahoma", 1, 24)); // NOI18N
-        jLabel2.setText("Game Name");
+        jLabel2.setText("Password Game");
 
-        fgButton.setText("Find Game");
-        fgButton.addActionListener(new java.awt.event.ActionListener() {
+        jbConnect.setText("Connect To Game");
+        jbConnect.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                fgButtonActionPerformed(evt);
+                jbConnectActionPerformed(evt);
+            }
+        });
+
+        jbHost.setText("Host Game");
+        jbHost.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jbHostActionPerformed(evt);
+            }
+        });
+
+        jButton1.setText("Single Player");
+        jButton1.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jButton1ActionPerformed(evt);
             }
         });
 
@@ -56,58 +76,84 @@ public class JPMainMenu extends javax.swing.JPanel {
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                .addComponent(jLabel2)
-                .addGap(46, 46, 46))
-            .addGroup(layout.createSequentialGroup()
                 .addGap(25, 25, 25)
-                .addComponent(fgButton)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                .addComponent(historyButton)
-                .addGap(0, 23, Short.MAX_VALUE))
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(jbHistory, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                    .addComponent(jbConnect, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                    .addComponent(jbHost, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                    .addGroup(layout.createSequentialGroup()
+                        .addComponent(jLabel2)
+                        .addGap(0, 21, Short.MAX_VALUE))
+                    .addComponent(jButton1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                .addContainerGap())
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
                 .addGap(27, 27, 27)
                 .addComponent(jLabel2)
-                .addGap(18, 18, 18)
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(fgButton)
-                    .addComponent(historyButton, javax.swing.GroupLayout.PREFERRED_SIZE, 23, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addContainerGap(43, Short.MAX_VALUE))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                .addComponent(jButton1)
+                .addGap(20, 20, 20)
+                .addComponent(jbConnect)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(jbHost)
+                .addGap(26, 26, 26)
+                .addComponent(jbHistory, javax.swing.GroupLayout.PREFERRED_SIZE, 23, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addContainerGap(42, Short.MAX_VALUE))
         );
     }// </editor-fold>//GEN-END:initComponents
 
-    private void historyButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_historyButtonActionPerformed
+    private void jbHistoryActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jbHistoryActionPerformed
         JFrame frame = new GameHistory();
         frame.setVisible(true);
         frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-    }//GEN-LAST:event_historyButtonActionPerformed
+    }//GEN-LAST:event_jbHistoryActionPerformed
 
-    private void fgButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_fgButtonActionPerformed
-        int result = JOptionPane.showConfirmDialog(null, inputs, "MySQL Connection Information", JOptionPane.PLAIN_MESSAGE);
-        if (result == JOptionPane.OK_OPTION) {
-            strHost = jtfHost.getText();
-            strPort = jtfPort.getText();
-            strUser = jtfUser.getText();
-            strPassword = new String(jpfPassword.getPassword());
-            strDB = jtfDB.getText();
-            System.out.println("You entered \n" 
-                + "Host  "  + strHost + "\n"
-                + "Port  "  + strPort + "\n"
-                + "User  "  +  strUser + "\n"
-                + "PW    "  + strPassword + "\n"
-                + "DB    "  + strDB + "\n");
-            } 
-        else 
-            System.out.println("User canceled / closed the dialog, result = " + result);
-    }//GEN-LAST:event_fgButtonActionPerformed
+    private void jbConnectActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jbConnectActionPerformed
+        Client client = new Client();
+        client.start();
+        JFGameDisplay game = new JFGameDisplay();
+        game.setVisible(true);
+        SwingUtilities.windowForComponent(this).setVisible(false);
+    }//GEN-LAST:event_jbConnectActionPerformed
 
+
+    private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_jButton1ActionPerformed
+
+    private void jbHostActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jbHostActionPerformed
+        int intPort = requestServerPort();
+        Thread server = new Thread(new Server(intPort));
+        server.start();
+        Client client = new Client(intPort);
+        client.start();
+        JFGameDisplay game = new JFGameDisplay();
+        game.setVisible(true);
+        SwingUtilities.windowForComponent(this).setVisible(false);
+    }//GEN-LAST:event_jbHostActionPerformed
+
+    private int requestServerPort(){
+        JTextField jtfPort = new JTextField();
+        JComponent[] inputs = new JComponent[]{
+            new JLabel("Server Port"),
+            jtfPort
+        };
+        int result = JOptionPane.showConfirmDialog(null, inputs, "Set Server Port", JOptionPane.PLAIN_MESSAGE);
+        if (result == JOptionPane.OK_OPTION) 
+        {
+            int intPort = Integer.parseInt(jtfPort.getText());
+            return intPort;
+        }
+        return 2000;
+    }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
-    private javax.swing.JButton fgButton;
-    private javax.swing.JButton historyButton;
+    private javax.swing.JButton jButton1;
     private javax.swing.JLabel jLabel2;
+    private javax.swing.JButton jbConnect;
+    private javax.swing.JButton jbHistory;
+    private javax.swing.JButton jbHost;
     // End of variables declaration//GEN-END:variables
 }

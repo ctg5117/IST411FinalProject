@@ -1,3 +1,4 @@
+
 /*
  * To change this license header, choose License Headers in Project Properties.
  * To change this template file, choose Tools | Templates
@@ -6,8 +7,6 @@
 package MastermindGame;
 
 import java.util.ArrayList;
-import java.util.Random;
-import java.util.Scanner;
 
 /**
  *
@@ -19,9 +18,14 @@ public class Game
     private Phrase gamePhrase;
     private Phrase currPhrase;
     
+    
     public Game()
     {
         
+    }
+    
+    public Game(Phrase phrase){
+        gamePhrase = phrase;
     }
     
     public int[] check(char charInPhraseGuess[],char charInPhrase[]){
@@ -57,31 +61,15 @@ public class Game
         gamePhrase.setPhrase(caIn);
     }
     
-    public String[] retrievePhrase(char[] caIn)
+    public String[] retrievePhrase(Phrase phrase)
     {
-        currPhrase.setPhrase(caIn);
+        currPhrase = phrase;
         
         return sendCorrect(check(currPhrase.getPhrase(), gamePhrase.getPhrase()));
     }
+           
+         
     
-    public void intializeFilePhrase(){
-        String[] filePhrase = new String[500];
-        int counter = 0;
-        char[] p = new char[5];
-        Scanner sc = new Scanner("X:\\My Documents\\NetBeansProjects\\IST411FinalProject"); // list retrieved from thefreedictionary.com
-        
-        while(sc.hasNextLine()){
-            filePhrase[counter] = sc.nextLine();
-            counter++;
-        }
-        
-        Random rand = new Random();
-        int randomNumber = rand.nextInt(filePhrase.length);
-        String temp = filePhrase[randomNumber];
-        for(int x = 0; x < 5; x++){
-            p[x] = temp.charAt(x);
-        }  
-    }
     
     /**Method to display correctness of a phrase.
      * 
@@ -103,3 +91,6 @@ public class Game
     }
     
 }
+
+
+
