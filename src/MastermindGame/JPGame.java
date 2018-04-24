@@ -185,7 +185,11 @@ public class JPGame extends javax.swing.JPanel {
         char[] charPhrase = strPhrase.toCharArray();
         Phrase phrase = new Phrase(charPhrase);
         client.sendPhrase(phrase);
-        
+        jtfFirst.setText("");
+        jtfSecond.setText("");
+        jtfThird.setText("");
+        jtfFourth.setText("");
+        jtfFifth.setText("");
     }//GEN-LAST:event_jbCheckPhraseActionPerformed
     
     public void activateButton(){
