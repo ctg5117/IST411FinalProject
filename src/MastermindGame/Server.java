@@ -8,6 +8,7 @@ package MastermindGame;
 import java.io.IOException;
 import java.io.ObjectInputStream;
 import java.io.ObjectOutputStream;
+import static java.lang.Thread.sleep;
 import java.net.ServerSocket;
 import java.net.Socket;
 import java.util.Arrays;
@@ -73,15 +74,23 @@ public class Server implements Runnable
     public void run() {
         try{
             ServerSocket server = new ServerSocket(intPort, MAXCLIENTS);
-            while(true){
+            while(intNumClients < 2){
                 intNumClients++;
                 clients[intNumClients-1] = new ClientThread(server.accept(), intNumClients-1);
                 clients[intNumClients-1].start();
-                
             }
         } catch (IOException ex) {
             Logger.getLogger(Server.class.getName()).log(Level.SEVERE, null, ex);
         }
+        while(!clients[0].isReady() || !clients[1].isReady()){
+            try {
+                sleep(10);
+            } catch (InterruptedException ex) {
+                Logger.getLogger(Server.class.getName()).log(Level.SEVERE, null, ex);
+            }
+        }
+        clients[0].sendMessage("Phrase Recieved");
+        clients[1].sendMessage("Phrase Recieved");
     }
     
     
@@ -91,6 +100,7 @@ public class Server implements Runnable
         private ObjectInputStream in;
         private Phrase correctPhrase;
         private int intClientNum;
+        private boolean ready = false;
         
         public ClientThread(Socket socket, int intClientNum){
             this.socket = socket;
@@ -109,6 +119,10 @@ public class Server implements Runnable
             } catch (ClassNotFoundException ex) {
                 Logger.getLogger(Server.class.getName()).log(Level.SEVERE, null, ex);
             }
+        }
+        
+        public boolean isReady(){
+            return ready;
         }
         
         public void sendResponse(ServerResponse response){
@@ -144,15 +158,7 @@ public class Server implements Runnable
                 	games.put(0, new Game(correctPhrase));
                 }
             Phrase phrase = null;
-            if (intClientNum == 0){
-                while(clients[1] == null){
-                }
-                clients[1].sendMessage("Phrase Recieved");
-            }else if (intClientNum == 1){
-                while (clients[0] == null){ 
-                }
-                clients[0].sendMessage("Phrase Recieved");
-            }
+            ready = true;
 
          // process connection
          try {
