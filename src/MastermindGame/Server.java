@@ -111,7 +111,7 @@ public class Server implements Runnable
             }
         }
         
-        public void sendResponse(String[] response){
+        public void sendResponse(ServerResponse response){
             try {
                 out.writeObject(response);
                 out.flush();
@@ -163,9 +163,18 @@ public class Server implements Runnable
                try {
                   phrase = (Phrase) in.readObject();
                   Game g = games.get(intClientNum);
-                  String[] response = g.retrievePhrase(phrase);
+                  String[] message = g.retrievePhrase(phrase);
                   //System.out.println(Arrays.toString(response));
+                  ServerResponse response = new ServerResponse();
+                  response.setMessage(message);
                   sendResponse(response);
+                  ServerResponse phraseResponse = new ServerResponse();
+                  phraseResponse.setPhrase(phrase);
+                  if(intClientNum == 0) {
+                	  clients[1].sendResponse(phraseResponse);
+                  }else if(intClientNum == 1) {
+                	  clients[0].sendResponse(phraseResponse);
+                  }
                }
 
                // process problems reading from client

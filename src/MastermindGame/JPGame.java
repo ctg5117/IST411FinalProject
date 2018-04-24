@@ -199,6 +199,10 @@ public class JPGame extends javax.swing.JPanel {
     public void updateCurrentTurn(String[] text){
         jtaCurrentTurn.append(Arrays.toString(text) + "\n");
     }
+    
+    public void updateOpponentGuesses(String guess) {
+    	jtPlayer2.append(guess + "\n");
+    }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JLabel jLabel1;

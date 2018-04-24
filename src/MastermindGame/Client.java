@@ -135,9 +135,16 @@ public class Client extends Thread
         while (true)
         {
         	try {
-				String[] message = (String[]) in.readObject();
-				System.out.println(Arrays.toString(message));
-                                display.updateCurrentTurn(message);
+				ServerResponse response = (ServerResponse) in.readObject();
+				if (response.containsMessage()) {
+					String[] message = response.getMessage();
+					System.out.println(Arrays.toString(message));
+                    display.updateCurrentTurn(message);
+				}
+				if (response.containsPhrase()) {
+					Phrase opponentPhrase = response.getPhrase();
+					display.updateOpponentGuesses(new String(opponentPhrase.getPhrase()));
+				}
 			} catch (ClassNotFoundException e) {
 				e.printStackTrace();
 			}
