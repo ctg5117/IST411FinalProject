@@ -14,8 +14,10 @@ public class JFSinglePlayer extends javax.swing.JFrame {
     /**
      * Creates new form JFSinglePlayer
      */
-    public JFSinglePlayer() {
+    public JFSinglePlayer()
+    {
         initComponents();
+
     }
 
     /**

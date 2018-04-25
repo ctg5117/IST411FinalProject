@@ -6,8 +6,10 @@
  */
 package MastermindGame;
 
+import java.io.BufferedReader;
+import java.io.FileReader;
+import java.util.ArrayList;
 import java.util.Random;
-import java.util.Scanner;
 
 /**
  *
@@ -24,46 +26,59 @@ public class Game
     
     public Game()
     {
-        
+        //gamePhrase = initializeFilePhrase();
     }
     
     public Game(Phrase phrase){
         gamePhrase = phrase;
+        
     }
     
+    /**Check a phrase to make sure it is correct.
+     * 
+     * @param charInPhraseGuess
+     * @param charInPhrase
+     * @return Int array, (# exactly right, #close, #wrong) 
+     */
     public int[] check(char charInPhraseGuess[],char charInPhrase[])
     {
-        int[] results = new int[3];
-        char charPhrase[] = charInPhrase;
-        char charPhraseGuess[] = charInPhraseGuess;
-        int length = charPhrase.length;
-        
-        for (int i = 0; i < length; i++) 
+        int intArrSize = 3;
+        int[] aIntResults = new int[intArrSize];
+        if(getIntGameLength() > getIntTurnCount())
         {
-            if(charPhrase[i] == charPhraseGuess[i])
+            
+            char charPhrase[] = charInPhrase;
+            char charPhraseGuess[] = charInPhraseGuess;
+            int length = charPhrase.length;
+
+            for (int i = 0; i < length; i++) 
             {
-                results[0]++;
-            }
-            else
-            { 
-                for (int j = 0; j < length; j++) 
+                if(charPhrase[i] == charPhraseGuess[i])
                 {
-                    if(charPhrase[i] == charPhraseGuess[j])
+                    aIntResults[0]++;
+                }
+                else
+                { 
+                    for (int j = 0; j < length; j++) 
                     {
-                        results[1]++;
-                        break;                    
+                        if(charPhrase[i] == charPhraseGuess[j])
+                        {
+                            aIntResults[1]++;
+                            break;                    
+                        }
                     }
                 }
             }
+            aIntResults[2] = ((5-aIntResults[0])-aIntResults[1]);
+
+            setIntTurnCount(getIntTurnCount() + 1);
         }
-        results[2] = ((5-results[0])-results[1]);
-        intTurnCount++;
-        return results;
+        return aIntResults;    
     }
     
     public void initializePhrase(char[] caIn) 
     {
-        getGamePhrase().setPhrase(caIn);
+        setGamePhrase(new Phrase(caIn));
     }
     
     public String[] retrievePhrase(Phrase phrase)
@@ -72,33 +87,45 @@ public class Game
         
         return sendCorrect(check(getCurrPhrase().getPhrase(), getGamePhrase().getPhrase()));
     }
-           
-    public static Phrase intializeFilePhrase()
-    {
-        String[] filePhrase = new String[500];
-        int counter = 0;
-        char[] p = new char[5];
-             
-        Scanner sc = new Scanner("X:\\My Documents\\NetBeansProjects\\IST411FinalProject\\Phrases.txt"); // list retrieved from thefreedictionary.com
-        
-        while(sc.hasNextLine()){
-            filePhrase[counter] = sc.nextLine();
-            counter++;
-        }
-        
-        Random rand = new Random();
-        int randomNumber = rand.nextInt(filePhrase.length);
-        String temp = filePhrase[randomNumber];
-        for(int x = 0; x < 5; x++){
-            p[x] = temp.charAt(x);
-        }
-        
-        return new Phrase(p);
-    }
-    
-
      
     
+    /**Create a phrase from a file
+     * adapted from https://stackoverflow.com/questions/12028205/randomly-choose-a-word-from-a-text-file
+     * 
+     * @author mak5956
+     * @return phrase from file 
+     */
+    public Phrase initializeFilePhrase()
+    {
+        String outPhrase = " ";
+             
+        try
+        {
+            System.out.println("in try");
+            BufferedReader r = new BufferedReader(new FileReader("X:\\My Documents\\NetBeansProjects\\IST411FinalProject\\Phrases.txt"));
+            String in = r.readLine();
+            ArrayList<String> words = new ArrayList<>();
+            while(in != null)
+            {
+                String[] wordsLine = in.split(" ");
+                for(String word : wordsLine)
+                {
+                    words.add(word);
+                }
+                in = r.readLine();
+            }
+            Random rand = new Random();
+            String phrase = words.get(rand.nextInt(words.size()));
+            outPhrase = phrase;
+        }
+        catch (Exception e)
+        {
+
+        }                            
+        
+        Phrase myP = new Phrase(outPhrase.toUpperCase().toCharArray());
+        return myP;
+    }
     
     /**Method to display correctness of a phrase.
      * 

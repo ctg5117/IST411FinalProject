@@ -5,17 +5,27 @@
  */
 package MastermindGame;
 
+import java.util.Arrays;
+
 /**
  *
  * @author ctg5117
  */
 public class JPSinglePlayer extends javax.swing.JPanel {
 
+    Game myGame = new Game();
     /**
      * Creates new form JPSinglePlayer
      */
-    public JPSinglePlayer() {
+    public JPSinglePlayer()
+    {
         initComponents();
+                
+        char[] cTest = new char[]{'H','E','L','L','O'};
+        
+        Phrase myPhrase = new Phrase(cTest);
+        myGame.initializePhrase(cTest);
+
     }
 
     /**
@@ -139,6 +149,29 @@ public class JPSinglePlayer extends javax.swing.JPanel {
 
     private void jbCheckPhraseActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jbCheckPhraseActionPerformed
         // TODO add your handling code here:
+                StringBuilder sb = new StringBuilder();
+        sb.append(jtfFirst.getText().substring(0, 1).toUpperCase());
+        sb.append(jtfSecond.getText().substring(0, 1).toUpperCase());
+        sb.append(jtfThird.getText().substring(0, 1).toUpperCase());
+        sb.append(jtfFourth.getText().substring(0, 1).toUpperCase());
+        sb.append(jtfFifth.getText().substring(0, 1).toUpperCase());
+        String strPhrase = sb.toString();
+        jtPlayer1.append(strPhrase + "\n");
+        char[] charPhrase = strPhrase.toCharArray();
+
+        Phrase phrase = new Phrase(charPhrase);
+        
+        
+          
+        
+        jtaCurrentTurn.append(Arrays.toString(myGame.retrievePhrase(phrase)) + "\n");
+        
+        jtfFirst.setText("");
+        jtfSecond.setText("");
+        jtfThird.setText("");
+        jtfFourth.setText("");
+        jtfFifth.setText("");
+        
 
     }//GEN-LAST:event_jbCheckPhraseActionPerformed
 
