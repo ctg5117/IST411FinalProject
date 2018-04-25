@@ -140,6 +140,9 @@ public class Client extends Thread
 					String[] message = response.getMessage();
 					System.out.println(Arrays.toString(message));
                     display.updateCurrentTurn(message);
+                    if(message.length == 1){
+                        break;
+                    }
 				}
 				if (response.containsPhrase()) {
 					Phrase opponentPhrase = response.getPhrase();
@@ -150,6 +153,10 @@ public class Client extends Thread
 			}
 
         }
+               display.disableButton();
+               out.close();
+               in.close();
+               socket.close();
     }
     
     public void sendPhrase(Phrase phrase){
