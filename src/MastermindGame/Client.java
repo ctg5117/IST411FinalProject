@@ -141,7 +141,7 @@ public class Client extends Thread
                     System.out.println(Arrays.toString(message));
                     display.updateCurrentTurn(message);
                     if(message.length == 1){
-                        break;
+                        display.disableButton();
                     }
 		}
                     if (response.containsPhrase()) {
@@ -153,10 +153,10 @@ public class Client extends Thread
 			}
 
         }
-               display.disableButton();
-               out.close();
-               in.close();
-               socket.close();
+               
+//               out.close();
+//               in.close();
+//               socket.close();
     }
     
     public void sendPhrase(Phrase phrase){

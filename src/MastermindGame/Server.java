@@ -210,16 +210,16 @@ public class Server implements Runnable
          // close streams and socket
          finally {
 
-            try {
-               out.close();
-               in.close();
-               socket.close();
-            }
-
-            // process problems with I/O
-            catch ( IOException ioException ) {
-               ioException.printStackTrace();
-            }
+//            try {
+//               out.close();
+//               in.close();
+//               socket.close();
+//            }
+//
+//            // process problems with I/O
+//            catch ( IOException ioException ) {
+//               ioException.printStackTrace();
+//            }
          }
         }
     }
