@@ -26,6 +26,16 @@ public class JFGameDisplay extends javax.swing.JFrame
         
         initComponents();
     }
+    
+    public JFGameDisplay(Client client){
+        JPGame myJPB = new JPGame(client);
+        client.setDisplay(myJPB);
+        myJPB.setVisible(true);
+        this.setLayout(new BorderLayout());
+        this.add(myJPB, BorderLayout.CENTER);
+        this.pack();
+        initComponents();
+    }
 
     /**
      * This method is called from within the constructor to initialize the form.

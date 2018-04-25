@@ -113,7 +113,7 @@ public class JPMainMenu extends javax.swing.JPanel {
     private void jbConnectActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jbConnectActionPerformed
         Client client = new Client();
         client.start();
-        JFGameDisplay game = new JFGameDisplay();
+        JFGameDisplay game = new JFGameDisplay(client);
         game.setVisible(true);
         SwingUtilities.windowForComponent(this).setVisible(false);
     }//GEN-LAST:event_jbConnectActionPerformed
@@ -129,7 +129,7 @@ public class JPMainMenu extends javax.swing.JPanel {
         server.start();
         Client client = new Client(intPort);
         client.start();
-        JFGameDisplay game = new JFGameDisplay();
+        JFGameDisplay game = new JFGameDisplay(client);
         game.setVisible(true);
         SwingUtilities.windowForComponent(this).setVisible(false);
     }//GEN-LAST:event_jbHostActionPerformed

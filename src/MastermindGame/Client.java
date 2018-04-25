@@ -30,6 +30,7 @@ public class Client extends Thread
 {
     private String strHost;
     private int intPort;
+    private JPGame display;
     //Use run from this code http://cs.lmu.edu/~ray/notes/javanetexamples/
     
     //Open main menu
@@ -60,6 +61,10 @@ public class Client extends Thread
     public Client(int intPort){
         strHost = "127.0.0.1";
         this.intPort = intPort;
+    }
+    
+    public void setDisplay(JPGame display){
+        this.display = display;
     }
     
     private static String[] getServerAddress()
@@ -108,18 +113,51 @@ public class Client extends Thread
             Logger.getLogger(Client.class.getName()).log(Level.SEVERE, null, ex);
         }
     System.out.println(connectionMessage);
+
+        char[] charPhrase = PhraseJOP.getPhrase();
+        StringBuilder strPhrase = new StringBuilder();
+        for (char c : charPhrase){
+            strPhrase.append(c);
+        }
+        Phrase phrase = new Phrase(charPhrase);
+        display.setYourPhrase(strPhrase.toString());
+        sendPhrase(phrase);
+        try {
+            String phraseSet = (String) in.readObject();
+            System.out.println(phraseSet);
+            display.activateButton();
+        } catch (ClassNotFoundException ex) {
+            Logger.getLogger(Client.class.getName()).log(Level.SEVERE, null, ex);
+        }
     
 
         // Process all messages from server, according to the protocol.
         while (true)
         {
         	try {
-				String[] message = (String[]) in.readObject();
-				System.out.println(Arrays.toString(message));
+				ServerResponse response = (ServerResponse) in.readObject();
+				if (response.containsMessage()) {
+					String[] message = response.getMessage();
+					System.out.println(Arrays.toString(message));
+                    display.updateCurrentTurn(message);
+				}
+				if (response.containsPhrase()) {
+					Phrase opponentPhrase = response.getPhrase();
+					display.updateOpponentGuesses(new String(opponentPhrase.getPhrase()));
+				}
 			} catch (ClassNotFoundException e) {
 				e.printStackTrace();
 			}
 
+        }
+    }
+    
+    public void sendPhrase(Phrase phrase){
+        try {
+            out.writeObject(phrase);
+            out.flush();
+        } catch (IOException ex) {
+            Logger.getLogger(Client.class.getName()).log(Level.SEVERE, null, ex);
         }
     }
 }

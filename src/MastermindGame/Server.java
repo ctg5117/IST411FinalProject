@@ -8,6 +8,7 @@ package MastermindGame;
 import java.io.IOException;
 import java.io.ObjectInputStream;
 import java.io.ObjectOutputStream;
+import static java.lang.Thread.sleep;
 import java.net.ServerSocket;
 import java.net.Socket;
 import java.util.Arrays;
@@ -73,15 +74,23 @@ public class Server implements Runnable
     public void run() {
         try{
             ServerSocket server = new ServerSocket(intPort, MAXCLIENTS);
-            while(true){
+            while(intNumClients < 2){
                 intNumClients++;
                 clients[intNumClients-1] = new ClientThread(server.accept(), intNumClients-1);
                 clients[intNumClients-1].start();
-                
             }
         } catch (IOException ex) {
             Logger.getLogger(Server.class.getName()).log(Level.SEVERE, null, ex);
         }
+        while(!clients[0].isReady() || !clients[1].isReady()){
+            try {
+                sleep(10);
+            } catch (InterruptedException ex) {
+                Logger.getLogger(Server.class.getName()).log(Level.SEVERE, null, ex);
+            }
+        }
+        clients[0].sendMessage("Phrase Recieved");
+        clients[1].sendMessage("Phrase Recieved");
     }
     
     
@@ -91,6 +100,7 @@ public class Server implements Runnable
         private ObjectInputStream in;
         private Phrase correctPhrase;
         private int intClientNum;
+        private boolean ready = false;
         
         public ClientThread(Socket socket, int intClientNum){
             this.socket = socket;
@@ -111,9 +121,22 @@ public class Server implements Runnable
             }
         }
         
-        public void sendResponse(String[] response){
+        public boolean isReady(){
+            return ready;
+        }
+        
+        public void sendResponse(ServerResponse response){
             try {
                 out.writeObject(response);
+                out.flush();
+            } catch (IOException ex) {
+                Logger.getLogger(Server.class.getName()).log(Level.SEVERE, null, ex);
+            }
+        }
+        
+        public void sendMessage(String message){
+            try {
+                out.writeObject(message);
                 out.flush();
             } catch (IOException ex) {
                 Logger.getLogger(Server.class.getName()).log(Level.SEVERE, null, ex);
@@ -135,6 +158,7 @@ public class Server implements Runnable
                 	games.put(0, new Game(correctPhrase));
                 }
             Phrase phrase = null;
+            ready = true;
 
          // process connection
          try {
@@ -145,9 +169,20 @@ public class Server implements Runnable
                try {
                   phrase = (Phrase) in.readObject();
                   Game g = games.get(intClientNum);
-                  String[] response = g.retrievePhrase(phrase);
-                  System.out.println(Arrays.toString(response));
+                  String[] message = g.retrievePhrase(phrase);
+                  int turnCount = g.getTurnCout();
+                  //System.out.println(Arrays.toString(response));
+                  ServerResponse response = new ServerResponse();
+                  response.setMessage(message);
+                  response.setTurnCount(turnCount);
                   sendResponse(response);
+                  ServerResponse phraseResponse = new ServerResponse();
+                  phraseResponse.setPhrase(phrase);
+                  if(intClientNum == 0) {
+                	  clients[1].sendResponse(phraseResponse);
+                  }else if(intClientNum == 1) {
+                	  clients[0].sendResponse(phraseResponse);
+                  }
                }
 
                // process problems reading from client
