@@ -38,7 +38,7 @@ public class JPMainMenu extends javax.swing.JPanel {
         jLabel2 = new javax.swing.JLabel();
         jbConnect = new javax.swing.JButton();
         jbHost = new javax.swing.JButton();
-        jButton1 = new javax.swing.JButton();
+        jbSinglePlayer = new javax.swing.JButton();
 
         jbHistory.setText("Game History");
         jbHistory.addActionListener(new java.awt.event.ActionListener() {
@@ -64,10 +64,10 @@ public class JPMainMenu extends javax.swing.JPanel {
             }
         });
 
-        jButton1.setText("Single Player");
-        jButton1.addActionListener(new java.awt.event.ActionListener() {
+        jbSinglePlayer.setText("Single Player");
+        jbSinglePlayer.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jButton1ActionPerformed(evt);
+                jbSinglePlayerActionPerformed(evt);
             }
         });
 
@@ -84,7 +84,7 @@ public class JPMainMenu extends javax.swing.JPanel {
                     .addGroup(layout.createSequentialGroup()
                         .addComponent(jLabel2)
                         .addGap(0, 21, Short.MAX_VALUE))
-                    .addComponent(jButton1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                    .addComponent(jbSinglePlayer, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
                 .addContainerGap())
         );
         layout.setVerticalGroup(
@@ -93,7 +93,7 @@ public class JPMainMenu extends javax.swing.JPanel {
                 .addGap(27, 27, 27)
                 .addComponent(jLabel2)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                .addComponent(jButton1)
+                .addComponent(jbSinglePlayer)
                 .addGap(20, 20, 20)
                 .addComponent(jbConnect)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
@@ -119,9 +119,13 @@ public class JPMainMenu extends javax.swing.JPanel {
     }//GEN-LAST:event_jbConnectActionPerformed
 
 
-    private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
+    private void jbSinglePlayerActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jbSinglePlayerActionPerformed
         // TODO add your handling code here:
-    }//GEN-LAST:event_jButton1ActionPerformed
+        JFSinglePlayer jfSP = new JFSinglePlayer();
+        jfSP.setVisible(true);
+        SwingUtilities.windowForComponent(this).setVisible(false);
+        
+    }//GEN-LAST:event_jbSinglePlayerActionPerformed
 
     private void jbHostActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jbHostActionPerformed
         int intPort = requestServerPort();
@@ -150,10 +154,10 @@ public class JPMainMenu extends javax.swing.JPanel {
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
-    private javax.swing.JButton jButton1;
     private javax.swing.JLabel jLabel2;
     private javax.swing.JButton jbConnect;
     private javax.swing.JButton jbHistory;
     private javax.swing.JButton jbHost;
+    private javax.swing.JButton jbSinglePlayer;
     // End of variables declaration//GEN-END:variables
 }

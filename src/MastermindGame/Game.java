@@ -24,7 +24,7 @@ public class Game
     
     public Game()
     {
-        
+        //gamePhrase = initializeFilePhrase();
     }
     
     public Game(Phrase phrase){
@@ -34,8 +34,8 @@ public class Game
     public int[] check(char charInPhraseGuess[],char charInPhrase[])
     {
         int intArrSize = 3;
-        int[] aIntResults = new int[]{-1,-1,-1};
-        if(getIntGameLength() < getIntTurnCount())
+        int[] aIntResults = new int[intArrSize];
+        if(getIntGameLength() > getIntTurnCount())
         {
             
             char charPhrase[] = charInPhrase;
@@ -64,19 +64,12 @@ public class Game
 
             setIntTurnCount(getIntTurnCount() + 1);
         }
-        else
-        {
-            for(int i = 0; i < intArrSize; i++)
-            {
-                aIntResults[i] = 1;
-            }
-        }
         return aIntResults;    
     }
     
     public void initializePhrase(char[] caIn) 
     {
-        getGamePhrase().setPhrase(caIn);
+        setGamePhrase(new Phrase(caIn));
     }
     
     public String[] retrievePhrase(Phrase phrase)
@@ -86,7 +79,7 @@ public class Game
         return sendCorrect(check(getCurrPhrase().getPhrase(), getGamePhrase().getPhrase()));
     }
            
-    public static Phrase intializeFilePhrase()
+    public Phrase initializeFilePhrase()
     {
         String[] filePhrase = new String[500];
         int counter = 0;
@@ -94,7 +87,8 @@ public class Game
              
         Scanner sc = new Scanner("X:\\My Documents\\NetBeansProjects\\IST411FinalProject\\Phrases.txt"); // list retrieved from thefreedictionary.com
         
-        while(sc.hasNextLine()){
+        while(sc.hasNextLine())
+        {
             filePhrase[counter] = sc.nextLine();
             counter++;
         }
@@ -102,16 +96,13 @@ public class Game
         Random rand = new Random();
         int randomNumber = rand.nextInt(filePhrase.length);
         String temp = filePhrase[randomNumber];
-        for(int x = 0; x < 5; x++){
+        for(int x = 0; x < 5; x++)
+        {
             p[x] = temp.charAt(x);
         }
         
         return new Phrase(p);
     }
-    
-
-     
-    
     
     /**Method to display correctness of a phrase.
      * 
@@ -121,7 +112,6 @@ public class Game
     public String[] sendCorrect(int[] intAIn)
     {
         String[] strOutput = {intAIn[0] + " Correct, ", intAIn[1] + " Right Letter, ", intAIn[2] + " Wrong letter"};
-        int[] intALose = new int[]{-1,-1,-1};
         
         if(intAIn[0] == 5)
         {
