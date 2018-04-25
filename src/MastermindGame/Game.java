@@ -33,45 +33,32 @@ public class Game
     
     public int[] check(char charInPhraseGuess[],char charInPhrase[])
     {
-        int intArrSize = 3;
-        int[] aIntResults = new int[]{-1,-1,-1};
-        if(getIntGameLength() < getIntTurnCount())
+        int[] results = new int[3];
+        char charPhrase[] = charInPhrase;
+        char charPhraseGuess[] = charInPhraseGuess;
+        int length = charPhrase.length;
+        
+        for (int i = 0; i < length; i++) 
         {
-            
-            char charPhrase[] = charInPhrase;
-            char charPhraseGuess[] = charInPhraseGuess;
-            int length = charPhrase.length;
-
-            for (int i = 0; i < length; i++) 
+            if(charPhrase[i] == charPhraseGuess[i])
             {
-                if(charPhrase[i] == charPhraseGuess[i])
+                results[0]++;
+            }
+            else
+            { 
+                for (int j = 0; j < length; j++) 
                 {
-                    aIntResults[0]++;
-                }
-                else
-                { 
-                    for (int j = 0; j < length; j++) 
+                    if(charPhrase[i] == charPhraseGuess[j])
                     {
-                        if(charPhrase[i] == charPhraseGuess[j])
-                        {
-                            aIntResults[1]++;
-                            break;                    
-                        }
+                        results[1]++;
+                        break;                    
                     }
                 }
             }
-            aIntResults[2] = ((5-aIntResults[0])-aIntResults[1]);
-
-            setIntTurnCount(getIntTurnCount() + 1);
         }
-        else
-        {
-            for(int i = 0; i < intArrSize; i++)
-            {
-                aIntResults[i] = 1;
-            }
-        }
-        return aIntResults;    
+        results[2] = ((5-results[0])-results[1]);
+        intTurnCount++;
+        return results;
     }
     
     public void initializePhrase(char[] caIn) 
@@ -121,7 +108,6 @@ public class Game
     public String[] sendCorrect(int[] intAIn)
     {
         String[] strOutput = {intAIn[0] + " Correct, ", intAIn[1] + " Right Letter, ", intAIn[2] + " Wrong letter"};
-        int[] intALose = new int[]{-1,-1,-1};
         
         if(intAIn[0] == 5)
         {

@@ -170,7 +170,7 @@ public class Server implements Runnable
                   phrase = (Phrase) in.readObject();
                   Game g = games.get(intClientNum);
                   String[] message = g.retrievePhrase(phrase);
-                  int turnCount = g.getTurnCout();
+                  int turnCount = g.getIntTurnCount();
                   //System.out.println(Arrays.toString(response));
                   ServerResponse response = new ServerResponse();
                   response.setMessage(message);
@@ -190,8 +190,15 @@ public class Server implements Runnable
                   
                }
 
-            } while ( true );
-
+            } while ( !games.get(intClientNum).isbWon() );
+            
+            DatabaseConnector dbConnector = new DatabaseConnector();
+            Game g = games.get(intClientNum);
+            String stIP = socket.getRemoteSocketAddress().toString().substring(1).split(":")[0];
+            String strPhrase = g.getGamePhrase().toString();
+            int turnCount = g.getIntTurnCount();
+            dbConnector.addGame(stIP, strPhrase, turnCount);
+            dbConnector.closeConnection();
            
          }
 
