@@ -170,9 +170,11 @@ public class Server implements Runnable
                   phrase = (Phrase) in.readObject();
                   Game g = games.get(intClientNum);
                   String[] message = g.retrievePhrase(phrase);
+                  int turnCount = g.getTurnCout();
                   //System.out.println(Arrays.toString(response));
                   ServerResponse response = new ServerResponse();
                   response.setMessage(message);
+                  response.setTurnCount(turnCount);
                   sendResponse(response);
                   ServerResponse phraseResponse = new ServerResponse();
                   phraseResponse.setPhrase(phrase);
