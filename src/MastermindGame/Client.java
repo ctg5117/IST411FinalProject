@@ -134,22 +134,29 @@ public class Client extends Thread
         // Process all messages from server, according to the protocol.
         while (true)
         {
-        	try {
-				ServerResponse response = (ServerResponse) in.readObject();
-				if (response.containsMessage()) {
-					String[] message = response.getMessage();
-					System.out.println(Arrays.toString(message));
+            try {
+                ServerResponse response = (ServerResponse) in.readObject();
+                if (response.containsMessage()) {
+                    String[] message = response.getMessage();
+                    System.out.println(Arrays.toString(message));
                     display.updateCurrentTurn(message);
-				}
-				if (response.containsPhrase()) {
-					Phrase opponentPhrase = response.getPhrase();
-					display.updateOpponentGuesses(new String(opponentPhrase.getPhrase()));
-				}
+                    if(message.length == 1){
+                        display.disableButton();
+                    }
+		}
+                    if (response.containsPhrase()) {
+			Phrase opponentPhrase = response.getPhrase();
+			display.updateOpponentGuesses(new String(opponentPhrase.getPhrase()));
+			}
 			} catch (ClassNotFoundException e) {
-				e.printStackTrace();
+                            e.printStackTrace();
 			}
 
         }
+               
+//               out.close();
+//               in.close();
+//               socket.close();
     }
     
     public void sendPhrase(Phrase phrase){

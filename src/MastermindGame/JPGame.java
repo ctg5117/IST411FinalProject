@@ -196,6 +196,10 @@ public class JPGame extends javax.swing.JPanel {
         jbCheckPhrase.setEnabled(true);
     }
     
+    public void disableButton(){
+        jbCheckPhrase.setEnabled(false);
+    }
+    
     public void setYourPhrase(String phrase){
         jlYourPhrase.setText(phrase);
     }

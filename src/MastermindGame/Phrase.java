@@ -6,6 +6,7 @@
 package MastermindGame;
 
 import java.io.Serializable;
+import java.util.Arrays;
 
 /**
  *
@@ -50,6 +51,15 @@ public class Phrase implements Serializable
    public int getSize()
    {
        return intSize;
+   }
+   
+   @Override
+   public String toString(){
+       StringBuilder strPhrase = new StringBuilder();
+       for (char c : caPhrase){
+            strPhrase.append(c);
+        }
+       return strPhrase.toString();
    }
    
 }

@@ -190,8 +190,15 @@ public class Server implements Runnable
                   
                }
 
-            } while ( true );
-
+            } while ( !games.get(intClientNum).isbWon() );
+            
+            DatabaseConnector dbConnector = new DatabaseConnector();
+            Game g = games.get(intClientNum);
+            String stIP = socket.getRemoteSocketAddress().toString().substring(1).split(":")[0];
+            String strPhrase = g.getGamePhrase().toString();
+            int turnCount = g.getIntTurnCount();
+            dbConnector.addGame(stIP, strPhrase, turnCount);
+            dbConnector.closeConnection();
            
          }
 
@@ -203,16 +210,16 @@ public class Server implements Runnable
          // close streams and socket
          finally {
 
-            try {
-               out.close();
-               in.close();
-               socket.close();
-            }
-
-            // process problems with I/O
-            catch ( IOException ioException ) {
-               ioException.printStackTrace();
-            }
+//            try {
+//               out.close();
+//               in.close();
+//               socket.close();
+//            }
+//
+//            // process problems with I/O
+//            catch ( IOException ioException ) {
+//               ioException.printStackTrace();
+//            }
          }
         }
     }
