@@ -11,8 +11,9 @@ import java.awt.BorderLayout;
  *
  * @author geiss
  */
-public class JFGameDisplay extends javax.swing.JFrame {
-
+public class JFGameDisplay extends javax.swing.JFrame 
+{
+    Game spGame = new Game();
     /**
      * Creates new form JFGameDisplay
      */
@@ -22,6 +23,7 @@ public class JFGameDisplay extends javax.swing.JFrame {
         this.setLayout(new BorderLayout());
         this.add(myJPB, BorderLayout.CENTER);
         this.pack();
+        
         initComponents();
     }
 
