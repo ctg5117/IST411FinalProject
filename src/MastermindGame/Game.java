@@ -6,8 +6,10 @@
  */
 package MastermindGame;
 
+import java.io.BufferedReader;
+import java.io.FileReader;
+import java.util.ArrayList;
 import java.util.Random;
-import java.util.Scanner;
 
 /**
  *
@@ -29,8 +31,15 @@ public class Game
     
     public Game(Phrase phrase){
         gamePhrase = phrase;
+        
     }
     
+    /**Check a phrase to make sure it is correct.
+     * 
+     * @param charInPhraseGuess
+     * @param charInPhrase
+     * @return Int array, (# exactly right, #close, #wrong) 
+     */
     public int[] check(char charInPhraseGuess[],char charInPhrase[])
     {
         int intArrSize = 3;
@@ -78,30 +87,44 @@ public class Game
         
         return sendCorrect(check(getCurrPhrase().getPhrase(), getGamePhrase().getPhrase()));
     }
-           
+     
+    
+    /**Create a phrase from a file
+     * adapted from https://stackoverflow.com/questions/12028205/randomly-choose-a-word-from-a-text-file
+     * 
+     * @author mak5956
+     * @return phrase from file 
+     */
     public Phrase initializeFilePhrase()
     {
-        String[] filePhrase = new String[500];
-        int counter = 0;
-        char[] p = new char[5];
+        String outPhrase = " ";
              
-        Scanner sc = new Scanner("X:\\My Documents\\NetBeansProjects\\IST411FinalProject\\Phrases.txt"); // list retrieved from thefreedictionary.com
-        
-        while(sc.hasNextLine())
+        try
         {
-            filePhrase[counter] = sc.nextLine();
-            counter++;
+            System.out.println("in try");
+            BufferedReader r = new BufferedReader(new FileReader("X:\\My Documents\\NetBeansProjects\\IST411FinalProject\\Phrases.txt"));
+            String in = r.readLine();
+            ArrayList<String> words = new ArrayList<>();
+            while(in != null)
+            {
+                String[] wordsLine = in.split(" ");
+                for(String word : wordsLine)
+                {
+                    words.add(word);
+                }
+                in = r.readLine();
+            }
+            Random rand = new Random();
+            String phrase = words.get(rand.nextInt(words.size()));
+            outPhrase = phrase;
         }
-        
-        Random rand = new Random();
-        int randomNumber = rand.nextInt(filePhrase.length);
-        String temp = filePhrase[randomNumber];
-        for(int x = 0; x < 5; x++)
+        catch (Exception e)
         {
-            p[x] = temp.charAt(x);
-        }
+
+        }                            
         
-        return new Phrase(p);
+        Phrase myP = new Phrase(outPhrase.toUpperCase().toCharArray());
+        return myP;
     }
     
     /**Method to display correctness of a phrase.
