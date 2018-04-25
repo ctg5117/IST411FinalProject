@@ -86,27 +86,28 @@ public class Game
         return sendCorrect(check(getCurrPhrase().getPhrase(), getGamePhrase().getPhrase()));
     }
            
-    public static Phrase intializeFilePhrase()
+    public static String intializeFilePhrase()
     {
-        String[] filePhrase = new String[500];
-        int counter = 0;
-        char[] p = new char[5];
+        String outPhrase = " ";
              
-        Scanner sc = new Scanner("X:\\My Documents\\NetBeansProjects\\IST411FinalProject\\Phrases.txt"); // list retrieved from thefreedictionary.com
-        
-        while(sc.hasNextLine()){
-            filePhrase[counter] = sc.nextLine();
-            counter++;
+        try{
+            System.out.println("in try");
+        BufferedReader r = new BufferedReader(new FileReader("X:\\My Documents\\NetBeansProjects\\IST411FinalProject\\Phrases.txt"));
+        String in = r.readLine();
+        ArrayList<String> words = new ArrayList<String>();
+        while(in != null) {
+            String[] wordsLine = in.split(" ");
+            for(String word : wordsLine) {
+                words.add(word);
         }
-        
+            in = r.readLine();
+        }
         Random rand = new Random();
-        int randomNumber = rand.nextInt(filePhrase.length);
-        String temp = filePhrase[randomNumber];
-        for(int x = 0; x < 5; x++){
-            p[x] = temp.charAt(x);
-        }
-        
-        return new Phrase(p);
+        String phrase = words.get(rand.nextInt(words.size()));
+        outPhrase = phrase;
+        }catch (Exception e) {}                             //appended from https://stackoverflow.com/questions/12028205/randomly-choose-a-word-from-a-text-file
+
+        return outPhrase;
     }
     
 
