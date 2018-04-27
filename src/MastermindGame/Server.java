@@ -11,7 +11,6 @@ import java.io.ObjectOutputStream;
 import static java.lang.Thread.sleep;
 import java.net.ServerSocket;
 import java.net.Socket;
-import java.util.Arrays;
 import java.util.HashMap;
 import java.util.logging.Level;
 import java.util.logging.Logger;

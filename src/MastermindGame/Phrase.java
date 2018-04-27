@@ -6,7 +6,6 @@
 package MastermindGame;
 
 import java.io.Serializable;
-import java.util.Arrays;
 
 /**
  *
