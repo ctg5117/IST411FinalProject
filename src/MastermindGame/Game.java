@@ -139,7 +139,7 @@ public class Game
         if(intAIn[0] == 5)
         {
             setbWon(true);
-            return new String[] {"You've won!"};
+            return new String[] {"You guessed the phrase in " + intTurnCount + " turns!"};
         }
 
         return strOutput;
