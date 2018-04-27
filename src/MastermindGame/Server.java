@@ -47,6 +47,7 @@ public class Server implements Runnable
         server.runServer(2000);
     }
     
+    
     public void runServer(int intPortNumber){
         try{
             intPort = intPortNumber;
@@ -70,6 +71,9 @@ public class Server implements Runnable
         this.intPort = intPort;
     }
 
+    /**
+     * Runs when the thread is started, opens socket and waits for client connections
+     */
     @Override
     public void run() {
         try{
@@ -82,6 +86,7 @@ public class Server implements Runnable
         } catch (IOException ex) {
             Logger.getLogger(Server.class.getName()).log(Level.SEVERE, null, ex);
         }
+        //Wait for clients to be ready before sending message to activate check phrase buttons
         while(!clients[0].isReady() || !clients[1].isReady()){
             try {
                 sleep(10);
@@ -109,6 +114,7 @@ public class Server implements Runnable
                 out = new ObjectOutputStream(socket.getOutputStream());
                 out.flush();
                 in = new ObjectInputStream(socket.getInputStream());
+                //Client server connection messages to make sure they are connected
                 out.writeObject("Connection Successful");
                 out.flush();
                 String connectionMessage = (String) in.readObject();
@@ -121,10 +127,18 @@ public class Server implements Runnable
             }
         }
         
+        /**
+         * Check if client is ready to begin guessing phrases
+         * @return 
+         */
         public boolean isReady(){
             return ready;
         }
         
+        /**
+         * Send a ServerResponse to the client
+         * @param response 
+         */
         public void sendResponse(ServerResponse response){
             try {
                 out.writeObject(response);
@@ -134,6 +148,10 @@ public class Server implements Runnable
             }
         }
         
+        /**
+         * Send a String message to the client
+         * @param message 
+         */
         public void sendMessage(String message){
             try {
                 out.writeObject(message);
@@ -143,55 +161,66 @@ public class Server implements Runnable
             }
         }
         
+        /**
+         * Main logic runs here when thread is started
+         */
+        @Override
         public void run(){
             try {
+                //Recieve phrase set by player
                 correctPhrase = (Phrase) in.readObject();
             } catch (IOException ex) {
                 Logger.getLogger(Server.class.getName()).log(Level.SEVERE, null, ex);
             } catch (ClassNotFoundException ex) {
                 Logger.getLogger(Server.class.getName()).log(Level.SEVERE, null, ex);
             }
-                phrases.put(intNumClients, correctPhrase);
-                if(intClientNum==0) {
+            //Store phrase
+            phrases.put(intNumClients, correctPhrase);
+            //Create new Game using phrase
+            if(intClientNum==0) {
                 games.put(1, new Game(correctPhrase));
-                }else if(intClientNum==1) {
-                	games.put(0, new Game(correctPhrase));
-                }
+            }else if(intClientNum==1) {
+                games.put(0, new Game(correctPhrase));
+            }
             Phrase phrase = null;
             ready = true;
 
-         // process connection
-         try {
+            // process connection
+            try {
 
             // read message from client
             do {
 
-               try {
-                  phrase = (Phrase) in.readObject();
-                  Game g = games.get(intClientNum);
-                  String[] message = g.retrievePhrase(phrase);
-                  int turnCount = g.getIntTurnCount();
-                  //System.out.println(Arrays.toString(response));
-                  ServerResponse response = new ServerResponse();
-                  response.setMessage(message);
-                  response.setTurnCount(turnCount);
-                  sendResponse(response);
-                  ServerResponse phraseResponse = new ServerResponse();
-                  phraseResponse.setPhrase(phrase);
-                  if(intClientNum == 0) {
-                	  clients[1].sendResponse(phraseResponse);
-                  }else if(intClientNum == 1) {
-                	  clients[0].sendResponse(phraseResponse);
-                  }
-               }
+                try {
+                    //Recive guess from player
+                    phrase = (Phrase) in.readObject();
+                    //Check if phrase is correct
+                    Game g = games.get(intClientNum);
+                    String[] message = g.retrievePhrase(phrase);
+                    int turnCount = g.getIntTurnCount();
+                    //System.out.println(Arrays.toString(response));
+                    //Send response to player
+                    ServerResponse response = new ServerResponse();
+                    response.setMessage(message);
+                    response.setTurnCount(turnCount);
+                    sendResponse(response);
+                    //Send guess to other player
+                    ServerResponse phraseResponse = new ServerResponse();
+                    phraseResponse.setPhrase(phrase);
+                    if(intClientNum == 0) {
+                        clients[1].sendResponse(phraseResponse);
+                    }else if(intClientNum == 1) {
+                        clients[0].sendResponse(phraseResponse);
+                    }
+                }
 
                // process problems reading from client
                catch ( ClassNotFoundException classNotFoundException ) {
                   
                }
 
-            } while ( !games.get(intClientNum).isbWon() );
-            
+            } while ( !games.get(intClientNum).isbWon() ); //Stay in loop until guess is correct
+            //Add game information to database
             DatabaseConnector dbConnector = new DatabaseConnector();
             Game g = games.get(intClientNum);
             String stIP = socket.getRemoteSocketAddress().toString().substring(1).split(":")[0];

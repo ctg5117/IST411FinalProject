@@ -50,6 +50,9 @@ public class Client extends Thread
     ObjectInputStream in;
     ObjectOutputStream out;
     
+    /**
+     * Create a client that will connect to a server
+     */
     public Client(){
         String[] serverInformation = getServerAddress();
         String strIP = serverInformation[0];
@@ -58,15 +61,27 @@ public class Client extends Thread
         this.intPort = intPort;
     }
     
+    /**
+     * Create a client on the same machine as the server
+     * @param intPort 
+     */
     public Client(int intPort){
         strHost = "127.0.0.1";
         this.intPort = intPort;
     }
     
+    /**
+     * Keep track of the JPGame to be able to update display information
+     * @param display 
+     */
     public void setDisplay(JPGame display){
         this.display = display;
     }
     
+    /**
+     * Use a JOptionPane to request the server IP and port
+     * @return String array with IP and port
+     */
     private static String[] getServerAddress()
     {
         JTextField ip = new JTextField();
@@ -87,6 +102,9 @@ public class Client extends Thread
         return null;
     }
     
+    /**
+     * Runs when thread is started
+     */
     @Override
     public void run(){
         try {
@@ -96,15 +114,22 @@ public class Client extends Thread
         }
     }
     
+    /**
+     * Main client logic runs in this method
+     * @param strIP
+     * @param intPort
+     * @throws IOException 
+     */
     private void run(String strIP, int intPort) throws IOException
     {
 
     // Make connection and initialize streams
-    Socket socket = new Socket(strIP, intPort);
-    out = new ObjectOutputStream(socket.getOutputStream());
-    out.flush();
-    in = new ObjectInputStream(socket.getInputStream());
-    String connectionMessage = null;
+        Socket socket = new Socket(strIP, intPort);
+        out = new ObjectOutputStream(socket.getOutputStream());
+        out.flush();
+        in = new ObjectInputStream(socket.getInputStream());
+        String connectionMessage = null;
+    //Client and server connection messages to make sure server is connected 
         try {
             connectionMessage = (String) in.readObject();
             out.writeObject("Client Connected");
@@ -112,19 +137,23 @@ public class Client extends Thread
         } catch (ClassNotFoundException ex) {
             Logger.getLogger(Client.class.getName()).log(Level.SEVERE, null, ex);
         }
-    System.out.println(connectionMessage);
-
+        System.out.println(connectionMessage);
+        //Ask user to input the phrase the other player will attempt to guess
         char[] charPhrase = PhraseJOP.getPhrase();
         StringBuilder strPhrase = new StringBuilder();
+        //Create a string from inout to be displayed
         for (char c : charPhrase){
             strPhrase.append(c);
         }
         Phrase phrase = new Phrase(charPhrase);
         display.setYourPhrase(strPhrase.toString());
+        //Send the phrase to the server
         sendPhrase(phrase);
+        //Wait until the other player has set their phrase before continuing
         try {
             String phraseSet = (String) in.readObject();
             System.out.println(phraseSet);
+            //Activate check phrase button
             display.activateButton();
         } catch (ClassNotFoundException ex) {
             Logger.getLogger(Client.class.getName()).log(Level.SEVERE, null, ex);
@@ -135,22 +164,26 @@ public class Client extends Thread
         while (true)
         {
             try {
+                //Wait for a ServerResponse
                 ServerResponse response = (ServerResponse) in.readObject();
+                //Response contains message about checked phrase
                 if (response.containsMessage()) {
                     String[] message = response.getMessage();
                     System.out.println(Arrays.toString(message));
                     display.updateCurrentTurn(message);
+                    //If the lengh is only 1, the player has guessed the phrase and does not need to check more phrases
                     if(message.length == 1){
                         display.disableButton();
                     }
 		}
-                    if (response.containsPhrase()) {
-			Phrase opponentPhrase = response.getPhrase();
-			display.updateOpponentGuesses(new String(opponentPhrase.getPhrase()));
-			}
-			} catch (ClassNotFoundException e) {
-                            e.printStackTrace();
-			}
+                //Response contains a guessed phrase from the opponent
+                if (response.containsPhrase()) {
+                    Phrase opponentPhrase = response.getPhrase();
+                    display.updateOpponentGuesses(new String(opponentPhrase.getPhrase()));
+		}
+            } catch (ClassNotFoundException e) {
+                    e.printStackTrace();
+            }
 
         }
                
@@ -159,6 +192,10 @@ public class Client extends Thread
 //               socket.close();
     }
     
+    /**
+     * Send a phrase to the server
+     * @param phrase 
+     */
     public void sendPhrase(Phrase phrase){
         try {
             out.writeObject(phrase);
