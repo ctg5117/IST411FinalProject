@@ -5,6 +5,12 @@
  */
 package MastermindGame;
 
+import java.sql.ResultSet;
+import java.sql.SQLException;
+import java.util.logging.Level;
+import java.util.logging.Logger;
+import javax.swing.table.*;
+
 /**
  *
  * @author mak5956
@@ -16,6 +22,7 @@ public class GameHistory extends javax.swing.JFrame {
      */
     public GameHistory() {
         initComponents();
+        populateTable();
     }
 
     /**
@@ -47,10 +54,7 @@ public class GameHistory extends javax.swing.JFrame {
         jTable1.setBackground(javax.swing.UIManager.getDefaults().getColor("Button.background"));
         jTable1.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
-                {null, null},
-                {null, null},
-                {null, null},
-                {null, null}
+
             },
             new String [] {
                 "Turns", "Phrase"
@@ -143,4 +147,22 @@ public class GameHistory extends javax.swing.JFrame {
     private javax.swing.JScrollPane jScrollPane1;
     private javax.swing.JTable jTable1;
     // End of variables declaration//GEN-END:variables
+
+    private void populateTable() {
+        DefaultTableModel table = (DefaultTableModel) jTable1.getModel();
+        try {
+            DatabaseConnector dbConnector = new DatabaseConnector();
+            ResultSet list = dbConnector.getPastGames();
+            //Skip test row
+            list.next();
+            while(list.next()){
+                String phrase = list.getString("phrase");
+                int turns = list.getInt("turns");
+                table.addRow(new Object[]{turns, phrase});
+            }
+            dbConnector.closeConnection();
+        } catch (SQLException ex) {
+            Logger.getLogger(GameHistory.class.getName()).log(Level.SEVERE, null, ex);
+        }
+    }
 }
