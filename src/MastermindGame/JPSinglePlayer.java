@@ -20,11 +20,7 @@ public class JPSinglePlayer extends javax.swing.JPanel {
     public JPSinglePlayer()
     {
         initComponents();
-                
-        char[] cTest = new char[]{'H','E','L','L','O'};
         
-        Phrase myPhrase = new Phrase(cTest);
-        myGame.initializePhrase(cTest);
 
     }
 
@@ -55,6 +51,7 @@ public class JPSinglePlayer extends javax.swing.JPanel {
 
         jtPlayer1.setColumns(20);
         jtPlayer1.setRows(5);
+        jtPlayer1.setFocusable(false);
         jScrollPane1.setViewportView(jtPlayer1);
 
         jlCurrentTurn.setFont(new java.awt.Font("Tahoma", 1, 12)); // NOI18N
@@ -64,6 +61,7 @@ public class JPSinglePlayer extends javax.swing.JPanel {
 
         jtaCurrentTurn.setColumns(20);
         jtaCurrentTurn.setRows(5);
+        jtaCurrentTurn.setFocusable(false);
         jScrollPane4.setViewportView(jtaCurrentTurn);
 
         jbCheckPhrase.setFont(new java.awt.Font("Tahoma", 0, 12)); // NOI18N
@@ -98,7 +96,7 @@ public class JPSinglePlayer extends javax.swing.JPanel {
                         .addGap(57, 57, 57)
                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                             .addComponent(jlCurrentTurn)
-                            .addComponent(jScrollPane4, javax.swing.GroupLayout.PREFERRED_SIZE, 219, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                            .addComponent(jScrollPane4, javax.swing.GroupLayout.DEFAULT_SIZE, 484, Short.MAX_VALUE)))
                     .addGroup(layout.createSequentialGroup()
                         .addGap(18, 18, 18)
                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -116,7 +114,7 @@ public class JPSinglePlayer extends javax.swing.JPanel {
                                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                                 .addComponent(jtfFifth, javax.swing.GroupLayout.PREFERRED_SIZE, 30, javax.swing.GroupLayout.PREFERRED_SIZE))
                             .addComponent(jbCheckPhrase, javax.swing.GroupLayout.PREFERRED_SIZE, 174, javax.swing.GroupLayout.PREFERRED_SIZE))))
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                .addContainerGap())
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -149,30 +147,38 @@ public class JPSinglePlayer extends javax.swing.JPanel {
 
     private void jbCheckPhraseActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jbCheckPhraseActionPerformed
         // TODO add your handling code here:
-                StringBuilder sb = new StringBuilder();
-        sb.append(jtfFirst.getText().substring(0, 1).toUpperCase());
-        sb.append(jtfSecond.getText().substring(0, 1).toUpperCase());
-        sb.append(jtfThird.getText().substring(0, 1).toUpperCase());
-        sb.append(jtfFourth.getText().substring(0, 1).toUpperCase());
-        sb.append(jtfFifth.getText().substring(0, 1).toUpperCase());
-        String strPhrase = sb.toString();
-        jtPlayer1.append(strPhrase + "\n");
-        char[] charPhrase = strPhrase.toCharArray();
+        if(myGame.isbWon() == false && myGame.isbLose() == false)
+        {     
+            StringBuilder mySB = new StringBuilder();
+            mySB.append(jtfFirst.getText().substring(0, 1).toUpperCase());
+            mySB.append(jtfSecond.getText().substring(0, 1).toUpperCase());
+            mySB.append(jtfThird.getText().substring(0, 1).toUpperCase());
+            mySB.append(jtfFourth.getText().substring(0, 1).toUpperCase());
+            mySB.append(jtfFifth.getText().substring(0, 1).toUpperCase());
+            String strPhrase = mySB.toString();
+            jtPlayer1.append(strPhrase + "\n");
+            char[] charPhrase = strPhrase.toCharArray();
 
-        Phrase phrase = new Phrase(charPhrase);
-        
-        
-          
-        
-        jtaCurrentTurn.append(Arrays.toString(myGame.retrievePhrase(phrase)) + "\n");
-        
-        jtfFirst.setText("");
-        jtfSecond.setText("");
-        jtfThird.setText("");
-        jtfFourth.setText("");
-        jtfFifth.setText("");
-        
+            Phrase phrase = new Phrase(charPhrase);
 
+            jtaCurrentTurn.append(Arrays.toString(myGame.retrievePhrase(phrase)) + "\n");
+
+            jtfFirst.setText("");
+            jtfSecond.setText("");
+            jtfThird.setText("");
+            jtfFourth.setText("");
+            jtfFifth.setText("");
+            
+            if(myGame.isbLose())
+            {
+                jtaCurrentTurn.append("You lose! The phrase was: " + myGame.getGamePhrase());
+                jbCheckPhrase.setEnabled(false);
+            }
+            else if(myGame.isbWon())
+            {
+                jbCheckPhrase.setEnabled(false);
+            }
+        }
     }//GEN-LAST:event_jbCheckPhraseActionPerformed
 
 

@@ -22,11 +22,12 @@ public class Game
     private Phrase gamePhrase;
     private Phrase currPhrase;
     private boolean bWon = false;
+    private boolean bLose = false;
     
     
     public Game()
     {
-        //gamePhrase = initializeFilePhrase();
+        setGamePhrase(initializeFilePhrase());
     }
     
     public Game(Phrase phrase){
@@ -72,6 +73,10 @@ public class Game
             aIntResults[2] = ((5-aIntResults[0])-aIntResults[1]);
 
             setIntTurnCount(getIntTurnCount() + 1);
+            if(getIntTurnCount() > getIntGameLength())
+            {
+                setbLose(false);
+            }
         }
         return aIntResults;    
     }
@@ -92,17 +97,20 @@ public class Game
     /**Create a phrase from a file
      * adapted from https://stackoverflow.com/questions/12028205/randomly-choose-a-word-from-a-text-file
      * 
-     * @author mak5956
      * @return phrase from file 
      */
-    public Phrase initializeFilePhrase()
+    public static Phrase initializeFilePhrase()
     {
         String outPhrase = " ";
              
         try
         {
             System.out.println("in try");
-            BufferedReader r = new BufferedReader(new FileReader("X:\\My Documents\\NetBeansProjects\\IST411FinalProject\\Phrases.txt"));
+            
+            //Chris @ home testing: C:\\Users\\geiss\\OneDrive\\Documents\\NetBeansProjects\\IST411FinalProject
+            //Testing @ school: X:\\My Documents\\NetBeansProjects\\IST411FinalProject\\Phrases.txt
+            
+            BufferedReader r = new BufferedReader(new FileReader("C:\\Users\\geiss\\OneDrive\\Documents\\NetBeansProjects\\IST411FinalProject\\Phrases.txt"));
             String in = r.readLine();
             ArrayList<String> words = new ArrayList<>();
             while(in != null)
@@ -134,7 +142,7 @@ public class Game
      */
     public String[] sendCorrect(int[] intAIn)
     {
-        String[] strOutput = {intAIn[0] + " Correct, ", intAIn[1] + " Right Letter, ", intAIn[2] + " Wrong letter"};
+        String[] strOutput = {intAIn[0] + " Right Letter, Right Place", intAIn[1] + " Right Letter, Wrong Place", intAIn[2] + " Wrong letter"};
         
         if(intAIn[0] == 5)
         {
@@ -150,7 +158,7 @@ public class Game
         int[] intArrTest = {1, 2, 3};
         Game myG = new Game();
         
-        System.out.println(myG.sendCorrect(intArrTest));
+        
     }
 
     /**
@@ -222,6 +230,21 @@ public class Game
     public void setbWon(boolean bWon) {
         this.bWon = bWon;
     }
+
+    /**
+     * @return the bLose
+     */
+    public boolean isbLose() {
+        return bLose;
+    }
+
+    /**
+     * @param bLose the bLose to set
+     */
+    public void setbLose(boolean bLose) {
+        this.bLose = bLose;
+    }
+    
     
 }
 
