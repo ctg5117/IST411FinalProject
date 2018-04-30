@@ -71,12 +71,11 @@ public class Game
                 }
             }
             aIntResults[2] = ((5-aIntResults[0])-aIntResults[1]);
-
-            setIntTurnCount(getIntTurnCount() + 1);
-            if(getIntTurnCount() > getIntGameLength())
-            {
-                setbLose(false);
-            }
+        }
+        intTurnCount++;
+        if(getIntTurnCount() > getIntGameLength())
+        {
+            setbLose(true);
         }
         return aIntResults;    
     }
@@ -110,7 +109,7 @@ public class Game
             //Chris @ home testing: C:\\Users\\geiss\\OneDrive\\Documents\\NetBeansProjects\\IST411FinalProject
             //Testing @ school: X:\\My Documents\\NetBeansProjects\\IST411FinalProject\\Phrases.txt
             
-            BufferedReader r = new BufferedReader(new FileReader("C:\\Users\\geiss\\OneDrive\\Documents\\NetBeansProjects\\IST411FinalProject\\Phrases.txt"));
+            BufferedReader r = new BufferedReader(new FileReader("X:\\My Documents\\NetBeansProjects\\IST411FinalProject\\Phrases.txt"));
             String in = r.readLine();
             ArrayList<String> words = new ArrayList<>();
             while(in != null)
@@ -148,6 +147,9 @@ public class Game
         {
             setbWon(true);
             return new String[] {"You guessed the phrase in " + intTurnCount + " turns!"};
+        }
+        if(bLose){
+            return new String[] {"You have lost, the phrase was " + gamePhrase.toString()};
         }
 
         return strOutput;

@@ -32,7 +32,6 @@ public class JFSinglePlayer extends javax.swing.JFrame {
         jPSinglePlayer2 = new MastermindGame.JPSinglePlayer();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
-        setUndecorated(true);
         setResizable(false);
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());

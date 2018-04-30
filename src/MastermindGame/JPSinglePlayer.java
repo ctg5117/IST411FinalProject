@@ -20,7 +20,7 @@ public class JPSinglePlayer extends javax.swing.JPanel {
     public JPSinglePlayer()
     {
         initComponents();
-        
+        System.out.println(myGame.getGamePhrase().toString());
 
     }
 
@@ -162,7 +162,7 @@ public class JPSinglePlayer extends javax.swing.JPanel {
             Phrase phrase = new Phrase(charPhrase);
 
             jtaCurrentTurn.append(Arrays.toString(myGame.retrievePhrase(phrase)) + "\n");
-
+            
             jtfFirst.setText("");
             jtfSecond.setText("");
             jtfThird.setText("");
@@ -171,7 +171,6 @@ public class JPSinglePlayer extends javax.swing.JPanel {
             
             if(myGame.isbLose())
             {
-                jtaCurrentTurn.append("You lose! The phrase was: " + myGame.getGamePhrase());
                 jbCheckPhrase.setEnabled(false);
             }
             else if(myGame.isbWon())
