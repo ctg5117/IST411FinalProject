@@ -109,7 +109,7 @@ public class Game
             //Chris @ home testing: C:\\Users\\geiss\\OneDrive\\Documents\\NetBeansProjects\\IST411FinalProject
             //Testing @ school: X:\\My Documents\\NetBeansProjects\\IST411FinalProject\\Phrases.txt
             
-            BufferedReader r = new BufferedReader(new FileReader("X:\\My Documents\\NetBeansProjects\\IST411FinalProject\\Phrases.txt"));
+            BufferedReader r = new BufferedReader(new FileReader("Phrases.txt"));
             String in = r.readLine();
             ArrayList<String> words = new ArrayList<>();
             while(in != null)

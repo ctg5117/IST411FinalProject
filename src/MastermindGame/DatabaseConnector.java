@@ -5,10 +5,12 @@
  */
 package MastermindGame;
 
+import java.io.File;
 import java.io.IOException;
 import java.nio.file.FileSystems;
 import java.nio.file.Files;
 import java.nio.file.Path;
+import java.nio.file.Paths;
 import java.sql.Connection;
 import java.sql.DriverManager;
 import java.sql.PreparedStatement;
@@ -94,14 +96,15 @@ public class DatabaseConnector {
      */
     private void createTable(){
         String strQuery = "";
+        File f = new File("pastgames.sql");
+        String p = null;
         try {
-            Path path = FileSystems.getDefault().getPath("scripts\\pastgames.sql");
-            strQuery = new String(Files.readAllBytes(path));
+            p = f.getCanonicalPath();
+            strQuery = new String(Files.readAllBytes(Paths.get(p)));
         } catch (IOException ex) {
             Logger.getLogger(DatabaseConnector.class.getName()).log(Level.SEVERE, null, ex);
-            System.out.println(ex.getLocalizedMessage());
-            return;
         }
+        System.out.println(p);
         try {
             PreparedStatement s = myConnection.prepareStatement(strQuery);
             s.executeUpdate();
