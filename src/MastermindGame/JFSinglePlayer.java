@@ -17,7 +17,7 @@ public class JFSinglePlayer extends javax.swing.JFrame {
     public JFSinglePlayer()
     {
         initComponents();
-
+           setTitle("Single Player");
     }
 
     /**

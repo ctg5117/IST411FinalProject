@@ -22,6 +22,7 @@ public class GameHistory extends javax.swing.JFrame {
      */
     public GameHistory() {
         initComponents();
+        setTitle("Game History");
         populateTable();
     }
 

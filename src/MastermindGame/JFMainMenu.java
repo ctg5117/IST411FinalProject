@@ -18,6 +18,7 @@ public class JFMainMenu extends javax.swing.JFrame {
      */
     public JFMainMenu() {
         initComponents();
+        setTitle("Mastermind");
     }
 
     /**

@@ -20,10 +20,10 @@ public class JFGameDisplay extends javax.swing.JFrame
     public JFGameDisplay() {
         JPGame myJPB = new JPGame();
         myJPB.setVisible(true);
+        setTitle("Multi Player");
         this.setLayout(new BorderLayout());
         this.add(myJPB, BorderLayout.CENTER);
         this.pack();
-        
         initComponents();
     }
     
@@ -31,6 +31,7 @@ public class JFGameDisplay extends javax.swing.JFrame
         JPGame myJPB = new JPGame(client);
         client.setDisplay(myJPB);
         myJPB.setVisible(true);
+        setTitle("Multi Player");
         this.setLayout(new BorderLayout());
         this.add(myJPB, BorderLayout.CENTER);
         this.pack();
