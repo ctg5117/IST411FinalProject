@@ -57,6 +57,7 @@ public class Game
                 if(charPhrase[i] == charPhraseGuess[i])
                 {
                     aIntResults[0]++;
+                    break;
                 }
                 else
                 { 
